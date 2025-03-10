@@ -1,3 +1,36 @@
-body {
-    color: red;
+/* Navbar */
+
+.navbar {
+    background-color: white;
+    border-bottom: 1px solid #f0f4f8;
+}
+
+.navbar-item {
+    color: #55007f;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.navbar-item:hover {
+    color: #4a036b;
+    background-color: #f0f4f8;
+}
+
+.navbar-burger {
+    color: #55007f;
+}
+
+.navbar-dropdown {
+    background-color: white;
+    border: 1px solid #f0f4f8;
+}
+
+.navbar-dropdown a:hover {
+    background-color: #f0f4f8;
+}
+
+.navbar-brand img {
+    max-height: 3rem;
+    height: auto;
+    width: auto;
 }
