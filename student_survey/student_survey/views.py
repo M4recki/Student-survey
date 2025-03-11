@@ -5,3 +5,6 @@ def home(request):
 
 def survey(request):
     return render(request, 'survey.html')
+
+def about(request):
+    return render(request, 'about.html')

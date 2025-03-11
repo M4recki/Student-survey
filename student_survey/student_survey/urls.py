@@ -22,4 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home),
     path('survey/', views.survey),
+    path('about/', views.about),
 ]

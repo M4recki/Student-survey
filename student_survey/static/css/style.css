@@ -1,8 +1,8 @@
 /* Navbar */
 
 .navbar {
-    background-color: white;
-    border-bottom: 1px solid #f0f4f8;
+    background-color: #131519;
+    border-bottom: 1px solid #131519;
 }
 
 .navbar-item {
@@ -13,7 +13,7 @@
 
 .navbar-item:hover {
     color: #4a036b;
-    background-color: #f0f4f8;
+    background-color: #171a1f;
 }
 
 .navbar-burger {
@@ -21,16 +21,55 @@
 }
 
 .navbar-dropdown {
-    background-color: white;
-    border: 1px solid #f0f4f8;
+    background-color: #131519;
+    border: 1px solid #131519;
 }
 
 .navbar-dropdown a:hover {
-    background-color: #f0f4f8;
+    background-color: #131519;
 }
 
 .navbar-brand img {
     max-height: 3rem;
     height: auto;
     width: auto;
+}
+
+/* Footer */
+
+.footer {
+    padding: 2rem 0;
+    margin-top: 2rem;
+    border-top: 1px solid #131519;
+}
+
+.social-links {
+    margin: 1rem 0;
+}
+
+.social-icon {
+    color: #55007f;
+    margin: 0 1rem;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+    color: #4a036b;
+}
+
+.social-icon i {
+    font-size: 1.5rem;
+}
+
+@media screen and (max-width: 768px) {
+    .social-links {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .social-icon {
+        margin: 0.5rem;
+    }
 }
