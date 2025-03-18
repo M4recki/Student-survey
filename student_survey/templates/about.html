@@ -1,13 +1,536 @@
-{% extends "base.html" %}
-{% block title %}About{% endblock %}
-{% block content %}
-<div class="container">
-  <h1 class="title mt-4">About page</h1>
-  <p>
-    This is a simple survey application. It allows you to fill in a survey
-    form and see the results. The application is written in Python using the
-    Django framework.
-  </p>
-  <p>Home page: <a href="/">Click</a></p>
-</div>
+{% extends "base.html" %} {% load static %} {% block title %}About Us - Student
+Survey{% endblock %} {% block content %}
+<!-- Hero Section -->
+<section class="hero is-medium">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-vcentered">
+        <div class="column is-6">
+          <h1 class="title is-1 has-text-white">About Us</h1>
+          <h2 class="subtitle is-4 has-text-white-bis">
+            Transforming Education Through Feedback
+          </h2>
+          <p class="is-size-5 mb-5">
+            We are dedicated to improving educational experiences through
+            meaningful student feedback. Our platform bridges the gap between
+            students and institutions, creating a pathway for continuous
+            improvement.
+          </p>
+          <div class="buttons">
+            <a href="/survey" class="button is-primary is-medium"
+              >Take Survey</a
+            >
+            <a href="/contact" class="button is-white is-outlined is-medium"
+              >Contact Us</a
+            >
+          </div>
+        </div>
+        <div class="column is-6">
+          <img
+            src="{% static 'img/logo.png' %}"
+            alt="About Us Illustration"
+            class="image" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Our Mission Section -->
+<section class="section">
+  <div class="container">
+    <div class="columns is-vcentered">
+      <div class="column is-5">
+        <img
+          src="{% static 'img/mission.svg' %}"
+          alt="Our Mission"
+          class="image" />
+      </div>
+      <div class="column is-6 is-offset-1">
+        <h2 class="title section-title">Our Mission</h2>
+        <p class="is-size-5 mb-4">
+          We believe that student feedback is essential for creating impactful
+          educational experiences. Our mission is to empower educational
+          institutions with the tools they need to collect, analyze, and act
+          upon student input.
+        </p>
+        <p class="is-size-5">
+          By facilitating open communication between students and institutions,
+          we help create a more responsive and effective educational environment
+          that benefits everyone involved.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Our Values Section -->
+<section class="section has-background-light">
+  <div class="container">
+    <h2 class="title section-title has-text-centered">Our Core Values</h2>
+
+    <div class="columns is-multiline mt-6">
+      <div class="column is-4">
+        <div class="box has-text-centered">
+          <div class="value-icon mb-4 mx-auto">
+            <span class="icon is-large">
+              <i class="fas fa-comments fa-3x"></i>
+            </span>
+          </div>
+          <h3 class="title is-4">Open Communication</h3>
+          <p>
+            We foster transparent dialogue between students and institutions to
+            create meaningful change.
+          </p>
+        </div>
+      </div>
+
+      <div class="column is-4">
+        <div class="box has-text-centered">
+          <div class="value-icon mb-4 mx-auto">
+            <span class="icon is-large">
+              <i class="fas fa-shield-alt fa-3x"></i>
+            </span>
+          </div>
+          <h3 class="title is-4">Privacy & Security</h3>
+          <p>
+            We prioritize protecting student information and ensuring anonymous
+            feedback channels.
+          </p>
+        </div>
+      </div>
+
+      <div class="column is-4">
+        <div class="box has-text-centered">
+          <div class="value-icon mb-4 mx-auto">
+            <span class="icon is-large">
+              <i class="fas fa-lightbulb fa-3x"></i>
+            </span>
+          </div>
+          <h3 class="title is-4">Continuous Improvement</h3>
+          <p>
+            We believe in the power of feedback to drive ongoing enhancements in
+            education.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Our Team Section -->
+<section class="section">
+  <div class="container">
+    <h2 class="title section-title has-text-centered">Meet Our Team</h2>
+    <p class="subtitle has-text-centered mb-6">
+      Dedicated professionals passionate about improving education
+    </p>
+
+    <div class="columns is-multiline">
+      <div class="column is-3">
+        <div class="card team-card">
+          <div class="card-image team-image">
+            <figure class="image is-4by3">
+              <img src="{% static 'img/team1.jpg' %}" alt="Team Member" />
+            </figure>
+          </div>
+          <div class="card-content has-text-centered">
+            <p class="title is-4">Dr. Emily Thompson</p>
+            <p class="subtitle is-6">Founder & CEO</p>
+            <p class="mb-3">
+              Former educator with 15+ years of experience in higher education.
+            </p>
+            <div class="team-social">
+              <a href="#"><i class="fab fa-linkedin"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fas fa-envelope"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="column is-3">
+        <div class="card team-card">
+          <div class="card-image team-image">
+            <figure class="image is-4by3">
+              <img src="{% static 'img/team2.jpg' %}" alt="Team Member" />
+            </figure>
+          </div>
+          <div class="card-content has-text-centered">
+            <p class="title is-4">Marcus Lee</p>
+            <p class="subtitle is-6">Chief Technology Officer</p>
+            <p class="mb-3">
+              Data scientist specializing in educational analytics and insights.
+            </p>
+            <div class="team-social">
+              <a href="#"><i class="fab fa-linkedin"></i></a>
+              <a href="#"><i class="fab fa-github"></i></a>
+              <a href="#"><i class="fas fa-envelope"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="column is-3">
+        <div class="card team-card">
+          <div class="card-image team-image">
+            <figure class="image is-4by3">
+              <img src="{% static 'img/team3.jpg' %}" alt="Team Member" />
+            </figure>
+          </div>
+          <div class="card-content has-text-centered">
+            <p class="title is-4">Sophia Garcia</p>
+            <p class="subtitle is-6">Head of Operations</p>
+            <p class="mb-3">
+              Expert in streamlining processes and ensuring quality service
+              delivery.
+            </p>
+            <div class="team-social">
+              <a href="#"><i class="fab fa-linkedin"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fas fa-envelope"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="column is-3">
+        <div class="card team-card">
+          <div class="card-image team-image">
+            <figure class="image is-4by3">
+              <img src="{% static 'img/team4.jpg' %}" alt="Team Member" />
+            </figure>
+          </div>
+          <div class="card-content has-text-centered">
+            <p class="title is-4">David Wilson</p>
+            <p class="subtitle is-6">Customer Success Manager</p>
+            <p class="mb-3">
+              Dedicated to helping institutions implement feedback effectively.
+            </p>
+            <div class="team-social">
+              <a href="#"><i class="fab fa-linkedin"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fas fa-envelope"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Our Journey Section -->
+<section class="section has-background-light">
+  <div class="container">
+    <h2 class="title section-title has-text-centered">Our Journey</h2>
+    <p class="subtitle has-text-centered mb-6">
+      The path that led us to transform educational feedback
+    </p>
+
+    <div class="columns">
+      <div class="column is-8 is-offset-2">
+        <div class="milestone-card">
+          <p class="milestone-year">2018</p>
+          <h3 class="title is-4">Foundation</h3>
+          <p>
+            Founded by Dr. Emily Thompson to address the gap in meaningful
+            student feedback systems.
+          </p>
+        </div>
+
+        <div class="milestone-card">
+          <p class="milestone-year">2019</p>
+          <h3 class="title is-4">First Partnerships</h3>
+          <p>
+            Launched pilot programs with 5 universities, surveying over 2,000
+            students.
+          </p>
+        </div>
+
+        <div class="milestone-card">
+          <p class="milestone-year">2020</p>
+          <h3 class="title is-4">Platform Development</h3>
+          <p>
+            Developed comprehensive analytics dashboard and mobile-friendly
+            survey interface.
+          </p>
+        </div>
+
+        <div class="milestone-card">
+          <p class="milestone-year">2021</p>
+          <h3 class="title is-4">Major Expansion</h3>
+          <p>
+            Expanded to 25+ educational institutions and received seed funding
+            for growth.
+          </p>
+        </div>
+
+        <div class="milestone-card">
+          <p class="milestone-year">2022</p>
+          <h3 class="title is-4">International Growth</h3>
+          <p>
+            Expanded services to international institutions across 10 countries.
+          </p>
+        </div>
+
+        <div class="milestone-card">
+          <p class="milestone-year">2023 - Present</p>
+          <h3 class="title is-4">Continuous Innovation</h3>
+          <p>
+            Developing AI-powered insights and expanding our suite of
+            educational improvement tools.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Partners Section -->
+<section class="section">
+  <div class="container">
+    <h2 class="title section-title has-text-centered">Our Partners</h2>
+    <p class="subtitle has-text-centered mb-6">
+      Trusted by leading educational institutions
+    </p>
+
+    <div class="columns is-multiline is-centered">
+      <div class="column is-2 has-text-centered">
+        <img
+          src="{% static 'img/partner1.png' %}"
+          alt="Partner Logo"
+          class="partner-logo" />
+      </div>
+      <div class="column is-2 has-text-centered">
+        <img
+          src="{% static 'img/partner2.png' %}"
+          alt="Partner Logo"
+          class="partner-logo" />
+      </div>
+      <div class="column is-2 has-text-centered">
+        <img
+          src="{% static 'img/partner3.png' %}"
+          alt="Partner Logo"
+          class="partner-logo" />
+      </div>
+      <div class="column is-2 has-text-centered">
+        <img
+          src="{% static 'img/partner4.png' %}"
+          alt="Partner Logo"
+          class="partner-logo" />
+      </div>
+      <div class="column is-2 has-text-centered">
+        <img
+          src="{% static 'img/partner5.png' %}"
+          alt="Partner Logo"
+          class="partner-logo" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="section has-background-light">
+  <div class="container">
+    <h2 class="title section-title has-text-centered">
+      Frequently Asked Questions
+    </h2>
+    <p class="subtitle has-text-centered mb-6">
+      Common questions about our platform and services
+    </p>
+
+    <div class="columns">
+      <div class="column is-8 is-offset-2">
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>How is student anonymity protected?</span>
+            <span class="icon"><i class="fas fa-chevron-down"></i></span>
+          </div>
+          <div class="faq-answer">
+            <p>
+              Our platform uses advanced data anonymization techniques to ensure
+              that individual responses cannot be traced back to specific
+              students. We never share identifying information with
+              institutions, and all data is encrypted and stored securely.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>How do institutions implement feedback?</span>
+            <span class="icon"><i class="fas fa-chevron-down"></i></span>
+          </div>
+          <div class="faq-answer">
+            <p>
+              We provide comprehensive analytics and actionable insights that
+              help institutions identify areas for improvement. Our customer
+              success team works closely with educational partners to develop
+              implementation strategies based on the feedback received.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>How often are surveys conducted?</span>
+            <span class="icon"><i class="fas fa-chevron-down"></i></span>
+          </div>
+          <div class="faq-answer">
+            <p>
+              Surveys can be conducted at frequencies determined by the
+              institution. Most commonly, our partners implement mid-term and
+              end-of-term surveys, but our platform supports custom scheduling
+              to meet specific needs.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Can the survey questions be customized?</span>
+            <span class="icon"><i class="fas fa-chevron-down"></i></span>
+          </div>
+          <div class="faq-answer">
+            <p>
+              Yes, our platform offers both standardized question sets developed
+              by educational experts and the ability to create custom questions.
+              Institutions can tailor surveys to address their specific areas of
+              interest while maintaining benchmark comparability.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>How do you ensure high response rates?</span>
+            <span class="icon"><i class="fas fa-chevron-down"></i></span>
+          </div>
+          <div class="faq-answer">
+            <p>
+              Our platform incorporates multiple engagement strategies,
+              including mobile-friendly design, reminder systems, and clear
+              communication about how feedback leads to actual improvements. We
+              also provide institutions with best practices for encouraging
+              participation.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section class="section">
+  <div class="container">
+    <h2 class="title section-title has-text-centered">Get in Touch</h2>
+    <p class="subtitle has-text-centered mb-6">
+      Have questions or interested in learning more?
+    </p>
+
+    <div class="columns">
+      <div class="column is-5">
+        <div class="contact-info-block">
+          <p class="is-size-5 mb-2">
+            <span class="icon contact-icon"
+              ><i class="fas fa-map-marker-alt"></i
+            ></span>
+            123 Education Lane, Suite 500<br />Boston, MA 02110
+          </p>
+        </div>
+        <div class="contact-info-block">
+          <p class="is-size-5 mb-2">
+            <span class="icon contact-icon"><i class="fas fa-phone"></i></span>
+            (555) 123-4567
+          </p>
+        </div>
+        <div class="contact-info-block">
+          <p class="is-size-5 mb-2">
+            <span class="icon contact-icon"
+              ><i class="fas fa-envelope"></i
+            ></span>
+            info@studentsurvey.edu
+          </p>
+        </div>
+        <div class="contact-info-block mt-5">
+          <p class="is-size-5 mb-2">Follow Us:</p>
+          <div class="buttons">
+            <a href="#" class="button is-medium">
+              <span class="icon"><i class="fab fa-facebook"></i></span>
+            </a>
+            <a href="#" class="button is-medium">
+              <span class="icon"><i class="fab fa-twitter"></i></span>
+            </a>
+            <a href="#" class="button is-medium">
+              <span class="icon"><i class="fab fa-linkedin"></i></span>
+            </a>
+            <a href="#" class="button is-medium">
+              <span class="icon"><i class="fab fa-instagram"></i></span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="column is-7">
+        <div class="box">
+          <form>
+            <div class="field">
+              <label class="label">Name</label>
+              <div class="control">
+                <input class="input" type="text" placeholder="Your Name" />
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label">Email</label>
+              <div class="control">
+                <input class="input" type="email" placeholder="Your Email" />
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label">Subject</label>
+              <div class="control">
+                <input class="input" type="text" placeholder="Subject" />
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label">Message</label>
+              <div class="control">
+                <textarea
+                  class="textarea"
+                  placeholder="Your Message"></textarea>
+              </div>
+            </div>
+
+            <div class="field">
+              <div class="control">
+                <button class="button is-primary is-fullwidth">
+                  Send Message
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="section cta-section">
+  <div class="container has-text-centered">
+    <h2 class="title is-2">Ready to Transform Your Educational Experience?</h2>
+    <p class="subtitle is-4 mb-6">
+      Join thousands of institutions already using our platform
+    </p>
+    <div class="buttons is-centered">
+      <a href="/demo" class="button is-primary is-large">Request a Demo</a>
+      <a href="/survey" class="button is-outlined is-primary is-large"
+        >Take a Survey</a
+      >
+    </div>
+  </div>
+</section>
 {% endblock %}

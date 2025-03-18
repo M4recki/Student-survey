@@ -104,3 +104,41 @@ function animateCounter(element, endValue, originalText) {
 
   requestAnimationFrame(updateCounter);
 }
+
+// FAQ accordion functionality
+
+document.addEventListener('DOMContentLoaded', () => {
+  // FAQ accordion functionality
+  const faqQuestions = document.querySelectorAll('.faq-question');
+
+  faqQuestions.forEach(question => {
+    question.addEventListener('click', () => {
+      const answer = question.nextElementSibling;
+
+      // Toggle active state
+      answer.classList.toggle('is-active');
+
+      // Change icon
+      const icon = question.querySelector('.icon i');
+      if (answer.classList.contains('is-active')) {
+        icon.classList.remove('fa-chevron-down');
+        icon.classList.add('fa-chevron-up');
+      } else {
+        icon.classList.remove('fa-chevron-up');
+        icon.classList.add('fa-chevron-down');
+      }
+    });
+  });
+
+  // Team card hover effect
+  const teamCards = document.querySelectorAll('.team-card');
+  teamCards.forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      card.classList.add('has-shadow');
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.classList.remove('has-shadow');
+    });
+  });
+});
