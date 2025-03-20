@@ -1,2 +1,3 @@
 .vscode/
 student_survey/__pycache__/
+.venv/
