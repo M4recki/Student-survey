@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
 // Load the testimonials animation
 
 document.addEventListener('DOMContentLoaded', () => {
-  const testimonialCards = document.querySelectorAll('.testimonial-card');
+  const testimonialCards = document.querySelectorAll('.card');
 
   const observerOptions = {
     threshold: 0.3,
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         const card = entry.target;
-        const content = card.querySelector('.testimonial-content');
+        const content = card.querySelector('.card-content');
         const media = card.querySelector('.media');
 
         setTimeout(() => {

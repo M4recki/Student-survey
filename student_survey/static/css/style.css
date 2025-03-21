@@ -76,11 +76,11 @@
 }
 
 /* Feature card styles */
-.feature-card {
+.card {
   composes: card;
 }
 
-.feature-card:hover {
+.card:hover {
   box-shadow: 0 4px 8px var(--primary-color);
   background-color: var(--bg-dark);
   transform: translateY(-5px);
@@ -97,24 +97,25 @@
   color: #55007f;
 }
 
-/* Testimonial card styles */
-.testimonial-card {
+/* Card styles */
+
+.card {
   composes: card;
 }
 
-.testimonial-card:hover {
+.card:hover {
   box-shadow: 0 4px 8px var(--primary-color);
   background-color: var(--bg-dark);
   transform: translateY(-5px);
 }
 
-.testimonial-content {
+.card-content {
   opacity: 0;
   transform: translateY(10px);
   transition: all 0.6s ease-out;
 }
 
-.testimonial-content.visible {
+.card-content.visible {
   opacity: 1;
   transform: translateY(0);
 }
@@ -180,6 +181,8 @@
   color: white;
 }
 
+/* About page */
+
 .timeline-item {
   position: relative;
   padding-left: 2rem;
@@ -202,15 +205,19 @@
   border-left: 2px solid transparent;
 }
 
-/* About page */
-
-.team-social a {
-  margin: 0 0.5rem;
-  color: #55007f;
+.icon-block {
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.team-social a:hover {
-  color: #4a036b;
+.icon-block .mission-icon {
+  padding: 2.5rem;
+  margin-bottom: 1rem;
+  color: #55007f;
+  font-size: 15rem;
+  transition: transform 0.3s ease;
 }
 
 .milestone-card {
@@ -221,7 +228,7 @@
 }
 
 .milestone-card::before {
-  content: '';
+  content: "";
   position: absolute;
   left: -12px;
   top: 0;
@@ -287,6 +294,7 @@
 
 .social-icon {
   color: var(--primary-color);
+  font-size: 1.5rem;
   margin: 0 1rem;
   padding: 0.5rem;
   border-radius: 50%;
@@ -297,9 +305,6 @@
   color: var(--primary-dark);
 }
 
-.social-icon i {
-  font-size: 1.5rem;
-}
 
 @media screen and (max-width: 768px) {
   .social-links {

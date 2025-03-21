@@ -29,7 +29,7 @@ Survey{% endblock %} {% block content %}
           <img
             src="{% static 'img/logo.png' %}"
             alt="About Us Illustration"
-            class="image" />
+            class="image hero-image image is-hidden-touch is-rounded" />
         </div>
       </div>
     </div>
@@ -38,17 +38,17 @@ Survey{% endblock %} {% block content %}
 
 <!-- Our Mission Section -->
 <section class="section">
-  <div class="container my-6">
+  <div class="container mt-6">
     <div class="columns is-vcentered">
       <div class="column is-5">
         <div class="icon-block">
-          <span class="icon is-large">
+          <span class="mission-icon is-large mt-6">
             <i class="fa-solid fa-bullseye"></i>
           </span>
         </div>
       </div>
       <div class="column is-6 is-offset-1">
-        <h2 class="title section-title has-text-centered">Our Mission</h2>
+        <h2 class="title section-title has-text-centered mb-6">Our Mission</h2>
         <p class="is-size-5 mb-4">
           We believe that student feedback is essential for creating impactful
           educational experiences. Our mission is to empower educational
@@ -68,82 +68,105 @@ Survey{% endblock %} {% block content %}
 <!-- Our Values Section -->
 <section class="section">
   <div class="container">
-    <h2 class="title section-title has-text-centered my-6">Our Core Values</h2>
+    <h2 class="title section-title has-text-centered mb-6">Our Core Values</h2>
 
     <div class="columns is-multiline my-6">
       <div class="column is-4">
-        <div class="box feature-card">
+        <div class="box card">
           <div class="icon-block has-text-centered">
             <span class="icon is-large">
               <i class="fas fa-lightbulb fa-3x"></i>
             </span>
           </div>
-          <h3 class="title is-4 has-text-centered">Continuous Improvement</h3>
-          <p class="has-text-centered">
-            We believe in the power of feedback to drive ongoing enhancements in
-            education.
-          </p>
+          <div class="card-content">
+            <h3 class="title is-4 has-text-centered">Continuous Improvement</h3>
+            <p class="has-text-centered">
+              We believe in the power of feedback to drive ongoing enhancements
+              in education.
+            </p>
+          </div>
         </div>
       </div>
 
       <div class="column is-4">
-        <div class="box feature-card">
+        <div class="box card">
           <div class="icon-block has-text-centered">
             <span class="icon is-large">
               <i class="fas fa-comments fa-3x"></i>
             </span>
           </div>
-          <h3 class="title is-4 has-text-centered">Open Communication</h3>
-          <p class="has-text-centered">
-            We foster transparent dialogue between students and institutions to
-            create meaningful change.
-          </p>
+          <div class="card-content">
+            <h3 class="title is-4 has-text-centered">Open Communication</h3>
+            <p class="has-text-centered">
+              We foster transparent dialogue between students and institutions
+              to create meaningful change.
+            </p>
+          </div>
         </div>
       </div>
 
       <div class="column is-4">
-        <div class="box feature-card">
+        <div class="box card">
           <div class="icon-block has-text-centered">
             <span class="icon is-large">
               <i class="fas fa-shield-alt fa-3x"></i>
             </span>
           </div>
-          <h3 class="title is-4 has-text-centered">Privacy & Security</h3>
-          <p class="has-text-centered">
-            We prioritize protecting student information and ensuring anonymous
-            feedback channels.
-          </p>
+          <div class="card-content">
+            <h3 class="title is-4 has-text-centered">Privacy & Security</h3>
+            <p class="has-text-centered">
+              We prioritize protecting student information and ensuring
+              anonymous feedback channels.
+            </p>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Our Team Section -->
+<!-- FIXME: Image should be on the left side and text on the right side -->
+<!-- Team -->
 <section class="section">
   <div class="container">
     <h2 class="title section-title has-text-centered">Meet Our Team</h2>
     <p class="subtitle has-text-centered my-6">
-      Dedicated professionals passionate about improving education
+      Dedicated professional passionate about improving education
     </p>
-
-    <div class="container">
-      <div class="is-3">
-            <figure class="image is-128x128">
-              <img class="is-rounded" src="{% static 'img/my-image.jpg' %}" alt="Team leader" />
-            </figure>
-          <div class="card-content has-text-centered">
-            <p class="title is-4">Marek Barański</p>
-            <p class="subtitle is-6">Creator</p>
-            <p class="mb-3">
-              Former educator with 15+ years of experience in higher education.
-            </p>
-            <div class="team-social">
-              <a href="#"><i class="fab fa-linkedin"></i></a>
-              <a href="#"><i class="fab fa-twitter"></i></a>
-              <a href="#"><i class="fas fa-envelope"></i></a>
-            </div>
+    <div class="columns is-vcentered">
+      <div class="column is-4">
+        <figure class="image mr-6 pr-6">
+          <img 
+            class="is-rounded mr-6"
+            src="{% static 'img/my-image.jpg' %}"
+            alt="Team leader"
+          />
+        </figure>
+      </div>
+      <div class="column is-8 ml-6">
+        <div class="content ml-6">
+          <p class="title is-4">Marek Barański</p>
+          <p class="subtitle is-6">Creator</p>
+          <p class="mb-3">
+            Former educator with 15+ years of experience in higher education.
+          </p>
+          <div class="team-social mt-5">
+            <a href="https://www.linkedin.com/in/marek-bara%C5%84ski-516639248/">
+              <span class="icon is-large">
+                <i class="fab fa-linkedin social-icon"></i>
+              </span>
+            </a>
+            <a href="https://github.com/M4recki?tab=repositories">
+              <i class="fab fab fa-github social-icon"></i>
+            </a>
+            <a href="https://progr4mmingskillz.blogspot.com/">
+              <i class="fa-solid fa-b social-icon"></i>
+            </a>
+            <a href="https://www.facebook.com/marek.baranski.902/">
+              <i class="fab fa-facebook social-icon"></i>
+            </a>
           </div>
+        </div>
       </div>
     </div>
   </div>
@@ -343,17 +366,25 @@ Survey{% endblock %} {% block content %}
         <div class="contact-info-block mt-5">
           <p class="is-size-5 my-5">Follow Us:</p>
           <div class="buttons">
-            <a href="#" class="button is-medium mr-6">
+            <a
+              href="https://www.facebook.com/marek.baranski.902/"
+              class="button is-medium mr-6">
               <span class="icon"><i class="fab fa-facebook"></i></span>
             </a>
-            <a href="#" class="button is-medium mr-6">
-              <span class="icon"><i class="fab fa-twitter"></i></span>
+            <a
+              href="https://github.com/M4recki?tab=repositories"
+              class="button is-medium mr-6">
+              <span class="icon"><i class="fab fa-github"></i></span>
             </a>
-            <a href="#" class="button is-medium mr-6">
+            <a
+              href="https://www.linkedin.com/in/marek-bara%C5%84ski-516639248/"
+              class="button is-medium mr-6">
               <span class="icon"><i class="fab fa-linkedin"></i></span>
             </a>
-            <a href="#" class="button is-medium mr-6">
-              <span class="icon"><i class="fab fa-instagram"></i></span>
+            <a
+              href="https://progr4mmingskillz.blogspot.com/"
+              class="button is-medium mr-6">
+              <span class="icon"><i class="fa-solid fa-b"></i></span>
             </a>
           </div>
         </div>
@@ -363,22 +394,31 @@ Survey{% endblock %} {% block content %}
           <form>
             <div class="field">
               <label class="label">Name</label>
-              <div class="control">
+              <div class="control has-icons-left">
                 <input class="input" type="text" placeholder="Your Name" />
+                <span class="icon is-small is-left">
+                  <i class="fa-solid fa-a"></i>
+                </span>
               </div>
             </div>
 
             <div class="field">
               <label class="label">Email</label>
-              <div class="control">
+              <div class="control has-icons-left">
                 <input class="input" type="email" placeholder="Your Email" />
+                <span class="icon is-small is-left">
+                  <i class="fas fa-envelope"></i>
+                </span>
               </div>
             </div>
 
             <div class="field">
               <label class="label">Subject</label>
-              <div class="control">
+              <div class="control has-icons-left">
                 <input class="input" type="text" placeholder="Subject" />
+                <span class="icon is-small is-left">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </span>
               </div>
             </div>
 
@@ -388,7 +428,6 @@ Survey{% endblock %} {% block content %}
                 <textarea
                   class="textarea"
                   placeholder="Your Message"></textarea>
-              </div>
             </div>
 
             <div class="field">
@@ -408,12 +447,16 @@ Survey{% endblock %} {% block content %}
 <!-- CTA Section -->
 <section class="section cta-section">
   <div class="container has-text-centered">
-    <h2 class="title is-2 my-6">Ready to Transform Your Educational Experience?</h2>
+    <h2 class="title is-2 my-6">
+      Ready to Transform Your Educational Experience?
+    </h2>
     <p class="subtitle is-4 mb-6">
       Join thousands of institutions already using our platform
     </p>
     <div class="buttons is-centered">
-      <a href="/demo" class="button is-outlined is-primary is-large">Request a Demo</a>
+      <a href="/demo" class="button is-outlined is-primary is-large"
+        >Request a Demo</a
+      >
       <a href="/survey" class="button is-outlined is-primary is-large"
         >Take a Survey</a
       >
