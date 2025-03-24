@@ -1,8 +1,119 @@
-{% extends "base.html" %}
-{% block title %}Home{% endblock %} 
-{% block content %}
-<div class="container">
-  <h1 class="title mt-4">Survey</h1>
-  <p>About page: <a href="/">click</a></p>
-</div>
-{% endblock %}
+{% extends "base.html" %} {% load static %} {% block title %}Student Surveys 
+{% endblock %} {% block content %}
+<!-- Survey Hero Section -->
+<section class="hero is-medium">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-vcentered">
+        <div class="column is-6">
+          <h1 class="title is-1 has-text-white">Student Surveys</h1>
+          <h2 class="subtitle is-4 has-text-white-bis my-5">
+            Share Your Experience and Help Improve Education
+          </h2>
+          <p class="is-size-5 mb-5">
+            Your honest feedback is crucial in enhancing learning experiences
+            and academic outcomes.
+          </p>
+        </div>
+        <div class="column is-6">
+          <img
+            src="{% static 'img/feedback.jpg' %}"
+            alt="Survey Illustration"
+            class="hero-image image is-hidden-touch" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Available Surveys Section -->
+<section class="section" id="course-surveys">
+  <div class="container">
+    <h2 class="title section-title has-text-centered my-6">
+      Available Surveys
+    </h2>
+    <div class="columns is-multiline my-6">
+
+      <!-- Course Evaluation Survey Card -->
+      <div class="column is-4">
+        <div class="box card">
+          <div class="icon-block has-text-centered">
+            <span class="icon is-large">
+              <i class="fas fa-university fa-3x"></i>
+            </span>
+          </div>
+          <div class="card-content">
+            <div class="survey-card-text">
+              <h3 class="title is-4">Course Evaluation Survey</h3>
+              <p class="has-text-centered">
+                Comprehensive survey about course quality, teaching
+                effectiveness, and learning experience.
+              </p>
+            </div>
+            <div class="has-text-centered mt-6">
+              <a href="#" class="button is-primary">Start Survey</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Instructor Feedback Survey Card -->
+      <div class="column is-4">
+        <div class="box card">
+          <div class="icon-block has-text-centered">
+            <span class="icon is-large">
+              <i class="fas fa-chalkboard-teacher fa-3x"></i>
+            </span>
+          </div>
+          <div class="card-content">
+            <div class="survey-card-text">
+              <h3 class="title is-4 has-text-centerd">Instructor Feedback</h3>
+              <p class="has-text-centered">
+                Provide detailed feedback about instructor performance and
+                teaching quality.
+              </p>
+            </div>
+            <div class="has-text-centered mt-6">
+              <a href="#" class="button is-primary">Start Survey</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Campus Life Survey Card -->
+      <div class="column is-4">
+        <div class="box card">
+          <div class="icon-block has-text-centered">
+            <span class="icon is-large">
+              <i class="fas fa-graduation-cap fa-3x"></i>
+            </span>
+          </div>
+          <div class="card-content">
+            <div class="survey-card-text">
+              <h3 class="title is-4 has-text-centered">Campus Life</h3>
+              <p class="has-text-centered">
+                Share your thoughts on campus facilities, services, and overall
+                university experience.
+              </p>
+            </div>
+            <div class="has-text-centered mt-6">
+              <a href="#" class="button is-primary">Start Survey</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="section dark-section">
+  <div class="container has-text-centered">
+    <h2 class="title is-2">Your Feedback Matters</h2>
+    <p class="subtitle is-4 my-6">
+      Help us improve the educational experience for everyone
+    </p>
+    <a href="#course-surveys" class="button is-primary is-large">Complete a Survey</a>
+  </div>
+</section>
+{% endblock %} 
