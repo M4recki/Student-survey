@@ -1,16 +1,19 @@
 // Load the navbar burger
 
-document.addEventListener('DOMContentLoaded', function () {
-  const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+document.addEventListener("DOMContentLoaded", function () {
+  const $navbarBurgers = Array.prototype.slice.call(
+    document.querySelectorAll(".navbar-burger"),
+    0
+  );
 
   if ($navbarBurgers.length > 0) {
-    $navbarBurgers.forEach($el => {
-      $el.addEventListener('click', () => {
+    $navbarBurgers.forEach(($el) => {
+      $el.addEventListener("click", () => {
         const target = $el.dataset.target;
         const $target = document.getElementById(target);
 
-        $el.classList.toggle('is-active');
-        $target.classList.toggle('is-active');
+        $el.classList.toggle("is-active");
+        $target.classList.toggle("is-active");
       });
     });
   }
@@ -18,31 +21,31 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // Load the testimonials animation
 
-document.addEventListener('DOMContentLoaded', () => {
-  const testimonialCards = document.querySelectorAll('.card');
+document.addEventListener("DOMContentLoaded", () => {
+  const testimonialCards = document.querySelectorAll(".card");
 
   const observerOptions = {
     threshold: 0.3,
-    rootMargin: '0px 0px -50px 0px'
+    rootMargin: "0px 0px -50px 0px",
   };
 
   const testimonialObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
+    entries.forEach((entry) => {
       if (entry.isIntersecting) {
         const card = entry.target;
-        const content = card.querySelector('.card-content');
-        const media = card.querySelector('.media');
+        const content = card.querySelector(".card-content");
+        const media = card.querySelector(".media");
 
         setTimeout(() => {
-          card.classList.add('visible');
+          card.classList.add("visible");
         }, 0);
 
         setTimeout(() => {
-          content.classList.add('visible');
+          content.classList.add("visible");
         }, 200);
 
         setTimeout(() => {
-          media.classList.add('visible');
+          media.classList.add("visible");
         }, 400);
 
         testimonialObserver.unobserve(entry.target);
@@ -50,27 +53,27 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }, observerOptions);
 
-  testimonialCards.forEach(card => {
+  testimonialCards.forEach((card) => {
     testimonialObserver.observe(card);
   });
 });
 
 // Load the counter animation for statistics section
 
-document.addEventListener('DOMContentLoaded', () => {
-  const statValues = document.querySelectorAll('.stat-value');
+document.addEventListener("DOMContentLoaded", () => {
+  const statValues = document.querySelectorAll(".stat-value");
 
   const observerOptions = {
     threshold: 0.5,
-    rootMargin: '0px 0px -50px 0px'
+    rootMargin: "0px 0px -50px 0px",
   };
 
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
+    entries.forEach((entry) => {
       if (entry.isIntersecting) {
         const statValue = entry.target;
         const originalText = statValue.textContent;
-        const endValue = parseInt(originalText.replace(/[k+%]/g, ''));
+        const endValue = parseInt(originalText.replace(/[k+%]/g, ""));
 
         animateCounter(statValue, endValue, originalText);
 
@@ -79,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }, observerOptions);
 
-  statValues.forEach(stat => observer.observe(stat));
+  statValues.forEach((stat) => observer.observe(stat));
 });
 
 function animateCounter(element, endValue, originalText) {
@@ -88,12 +91,14 @@ function animateCounter(element, endValue, originalText) {
   const startTime = performance.now();
 
   // Extract ‘k+’ or ‘%’ from the original text
-  const suffix = originalText.replace(endValue.toString(), '');
+  const suffix = originalText.replace(endValue.toString(), "");
 
   function updateCounter(currentTime) {
     const elapsedTime = currentTime - startTime;
     const progress = Math.min(elapsedTime / duration, 1);
-    const currentValue = Math.round(startValue + progress * (endValue - startValue));
+    const currentValue = Math.round(
+      startValue + progress * (endValue - startValue)
+    );
 
     element.textContent = currentValue + suffix;
 
@@ -107,38 +112,39 @@ function animateCounter(element, endValue, originalText) {
 
 // FAQ accordion functionality
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   // FAQ accordion functionality
-  const faqQuestions = document.querySelectorAll('.faq-question');
+  const faqQuestions = document.querySelectorAll(".faq-question");
 
-  faqQuestions.forEach(question => {
-    question.addEventListener('click', () => {
+  faqQuestions.forEach((question) => {
+    question.addEventListener("click", () => {
       const answer = question.nextElementSibling;
 
       // Toggle active state
-      answer.classList.toggle('is-active');
+      answer.classList.toggle("is-active");
 
       // Change icon
-      const icon = question.querySelector('.icon i');
-      if (answer.classList.contains('is-active')) {
-        icon.classList.remove('fa-chevron-down');
-        icon.classList.add('fa-chevron-up');
+      const icon = question.querySelector(".icon i");
+      if (answer.classList.contains("is-active")) {
+        icon.classList.remove("fa-chevron-down");
+        icon.classList.add("fa-chevron-up");
       } else {
-        icon.classList.remove('fa-chevron-up');
-        icon.classList.add('fa-chevron-down');
+        icon.classList.remove("fa-chevron-up");
+        icon.classList.add("fa-chevron-down");
       }
     });
   });
 
   // Team card hover effect
-  const teamCards = document.querySelectorAll('.team-card');
-  teamCards.forEach(card => {
-    card.addEventListener('mouseenter', () => {
-      card.classList.add('has-shadow');
+  const teamCards = document.querySelectorAll(".team-card");
+  teamCards.forEach((card) => {
+    card.addEventListener("mouseenter", () => {
+      card.classList.add("has-shadow");
     });
 
-    card.addEventListener('mouseleave', () => {
-      card.classList.remove('has-shadow');
+    card.addEventListener("mouseleave", () => {
+      card.classList.remove("has-shadow");
     });
   });
 });
+

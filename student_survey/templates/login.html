@@ -1,0 +1,111 @@
+{% extends "base.html" %} {% load static %} {% block title %}Login - Student
+Survey{% endblock %} {% block content %}
+<section class="hero is-medium">
+    <div class="hero-body">
+      <div class="container">
+        <div class="columns is-vcentered">
+          <div class="column is-6">
+            <h1 class="title is-1 has-text-white">Create Your Account</h1>
+            <h2 class="subtitle is-4 has-text-white-bis my-5">
+                Access Your Student Survey Dashboard
+              </h2>
+              <p class="is-size-5 mb-5">
+                Log in to provide valuable feedback, track your survey history, and
+                contribute to improving educational experiences.
+              </p>
+          </div>
+          <div class="column icon-block is-6">
+            <span class="big-icon is-large mt-6">
+              <i class="fa-solid fa-user-check is-hidden-touch"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- Login Section -->
+<section class="section">
+  <div class="container">
+    <div class="columns">
+      <div class="column is-6 is-offset-3">
+        <div class="box">
+          <form method="post" action="/login">
+            {% csrf_token %}
+
+            <div class="field">
+              <label class="label">Email Address</label>
+              <div class="control has-icons-left">
+                <input
+                  class="input"
+                  type="email"
+                  name="email"
+                  placeholder="Enter your institutional email"
+                  required
+                />
+                <span class="icon is-small is-left">
+                  <i class="fas fa-envelope"></i>
+                </span>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label">Password</label>
+              <div class="control has-icons-left">
+                <input
+                  class="input"
+                  type="password"
+                  name="password"
+                  placeholder="Enter your password"
+                  required
+                />
+                <span class="icon is-small is-left">
+                  <i class="fas fa-lock"></i>
+                </span>
+              </div>
+              <p class="help my-4">
+                <a href="/" class="contact-icon">
+                  Forgot Password?
+                </a>
+              </p>
+            </div>
+
+            <div class="field">
+              <div class="control">
+                <label class="checkbox">
+                  <input type="checkbox" name="remember_me" />
+                  Remember me on this device
+                </label>
+              </div>
+            </div>
+
+            <div class="field pt-4">
+              <div class="control">
+                <button class="button is-primary is-fullwidth" type="submit">
+                  Log In
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <div class="has-text-centered my-6">
+            <p>
+              Don't have an account?
+              <a href="/signup" class="contact-icon">
+                Create Account
+              </a>
+            </p>
+          </div>
+
+          <div class="has-text-centered">
+            <p class="is-size-7">
+              <strong>Pro Tip:</strong> Use your institutional email for login
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

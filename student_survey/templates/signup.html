@@ -1,0 +1,182 @@
+{% extends "base.html" %} {% load static %} {% block title %}Register - Student
+Survey{% endblock %} {% block content %}
+<!-- Hero Section -->
+<section class="hero is-medium">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-vcentered">
+        <div class="column is-6">
+          <h1 class="title is-1 has-text-white">Create Your Account</h1>
+          <h2 class="subtitle is-4 has-text-white-bis my-5">
+            Join Our Student Feedback Platform
+          </h2>
+          <p class="is-size-5 mb-5">
+            Register to participate in surveys, provide valuable feedback, and
+            help improve educational experiences across institutions.
+          </p>
+        </div>
+        <div class="column icon-block is-6">
+          <span class="big-icon is-large mt-6">
+            <i class="fa-solid fa-user-plus is-hidden-touch"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Registration Section -->
+<section class="section">
+  <div class="container">
+    <div class="columns">
+      <div class="column is-6 is-offset-3">
+        <div class="box">
+          <form method="post">
+            {% csrf_token %}
+
+            <div class="field">
+              <label class="label">First Name</label>
+              <div class="control has-icons-left">
+                <input
+                  class="input"
+                  type="text"
+                  name="first_name"
+                  placeholder="Enter your first name"
+                  required
+                />
+                <span class="icon is-small is-left">
+                  <i class="fas fa-user"></i>
+                </span>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label">Last Name</label>
+              <div class="control has-icons-left">
+                <input
+                  class="input"
+                  type="text"
+                  name="last_name"
+                  placeholder="Enter your last name"
+                  required
+                />
+                <span class="icon is-small is-left">
+                  <i class="fas fa-user"></i>
+                </span>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label">Email Address</label>
+              <div class="control has-icons-left">
+                <input
+                  class="input"
+                  type="email"
+                  name="email"
+                  placeholder="Enter your institutional email"
+                  required
+                />
+                <span class="icon is-small is-left">
+                  <i class="fas fa-envelope"></i>
+                </span>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label">Password</label>
+              <div class="control has-icons-left">
+                <input
+                  class="input"
+                  type="password"
+                  name="password"
+                  placeholder="Create a strong password"
+                  required
+                />
+                <span class="icon is-small is-left">
+                  <i class="fas fa-lock"></i>
+                </span>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label">Confirm Password</label>
+              <div class="control has-icons-left">
+                <input
+                  class="input"
+                  type="password"
+                  name="confirm_password"
+                  placeholder="Confirm your password"
+                  required
+                />
+                <span class="icon is-small is-left">
+                  <i class="fas fa-lock"></i>
+                </span>
+              </div>
+            </div>
+
+            <div class="field">
+              <div class="control">
+                <label class="checkbox">
+                  <input type="checkbox" name="terms" required />
+                  I agree to the Terms of Service and Privacy Policy
+                </label>
+              </div>
+            </div>
+
+            <div class="field pt-4">
+              <div class="control">
+                <button class="button is-primary is-fullwidth" type="submit">
+                  Create Account
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <div class="has-text-centered mt-4">
+            <p>
+              Already have an account?
+              <a href="/login" class="contact-icon">Log In</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Privacy Assurance Section -->
+<section class="section bg-darker">
+  <div class="container has-text-centered">
+    <h2 class="title is-3 mb-4">Your Privacy is Our Priority</h2>
+    <p class="subtitle is-5 my-6">
+      We ensure the confidentiality and security of your personal information.
+    </p>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="columns">
+          <div class="column is-3 has-text-right">
+            <p class="is-size-4 mb-2">
+              <i class="fas fa-lock social-icon"></i>
+            </p>
+            <p class="is-size-4 mb-2">
+              <i class="fas fa-shield-alt social-icon"></i>
+            </p>
+            <p class="is-size-4 mb-2">
+              <i class="fas fa-user-secret social-icon"></i>
+            </p>
+            <p class="is-size-4 mb-2">
+              <i class="fas fa-globe social-icon"></i>
+            </p>
+          </div>
+          <div class="column is-9 has-text-left">
+            <p class="is-size-6 mt-2">All personal data is encrypted and securely stored</p>
+            <p class="is-size-6 my-5">Your feedback remains completely anonymous</p>
+            <p class="is-size-6 my-5">We never sell or share your personal information</p>
+            <p class="is-size-6 my-5">Compliance with international data protection regulations</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
