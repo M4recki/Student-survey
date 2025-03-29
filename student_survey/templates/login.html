@@ -5,7 +5,7 @@ Survey{% endblock %} {% block content %}
       <div class="container">
         <div class="columns is-vcentered">
           <div class="column is-6">
-            <h1 class="title is-1 has-text-white">Create Your Account</h1>
+            <h1 class="title is-1 has-text-white">Log in to your account</h1>
             <h2 class="subtitle is-4 has-text-white-bis my-5">
                 Access Your Student Survey Dashboard
               </h2>
@@ -30,7 +30,7 @@ Survey{% endblock %} {% block content %}
     <div class="columns">
       <div class="column is-6 is-offset-3">
         <div class="box">
-          <form method="post" action="/login">
+          <form method="post" action="{% url 'login' %}">
             {% csrf_token %}
 
             <div class="field">

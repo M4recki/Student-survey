@@ -31,7 +31,7 @@ Survey{% endblock %} {% block content %}
     <div class="columns">
       <div class="column is-6 is-offset-3">
         <div class="box">
-          <form method="post">
+          <form method="post" action="{% url 'signup' %}">
             {% csrf_token %}
 
             <div class="field">
@@ -169,10 +169,18 @@ Survey{% endblock %} {% block content %}
             </p>
           </div>
           <div class="column is-9 has-text-left">
-            <p class="is-size-6 mt-2">All personal data is encrypted and securely stored</p>
-            <p class="is-size-6 my-5">Your feedback remains completely anonymous</p>
-            <p class="is-size-6 my-5">We never sell or share your personal information</p>
-            <p class="is-size-6 my-5">Compliance with international data protection regulations</p>
+            <p class="is-size-6 mt-2">
+              All personal data is encrypted and securely stored
+            </p>
+            <p class="is-size-6 my-5">
+              Your feedback remains completely anonymous
+            </p>
+            <p class="is-size-6 my-5">
+              We never sell or share your personal information
+            </p>
+            <p class="is-size-6 my-5">
+              Compliance with international data protection regulations
+            </p>
           </div>
         </div>
       </div>
