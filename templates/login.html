@@ -59,6 +59,15 @@ Survey{% endblock %} {% block content %}
                   placeholder="Enter your password"
                   required
                 />
+                {% if messages %}
+                <div class="notification is-danger mt-5">
+                  <ul>
+                      {% for message in messages %}
+                      <li>{{ message }}</li>
+                      {% endfor %}
+                  </ul>
+              </div>
+              {% endif %}
                 <span class="icon is-small is-left">
                   <i class="fas fa-lock"></i>
                 </span>

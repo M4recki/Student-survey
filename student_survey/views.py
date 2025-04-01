@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate, logout, login as auth_login
+from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from .models import Student
 
@@ -22,6 +23,10 @@ def signup(request):
             messages.error(request, "Passwords do not match.")
             return render(request, "signup.html")
 
+        if len(password) < 8:
+            messages.error(request, "Password must be at least 8 characters long.")
+            return render(request, "signup.html")
+
         if Student.objects.filter(email=email).exists():
             messages.error(request, "Email is already registered.")
             return render(request, "signup.html")
@@ -37,6 +42,8 @@ def signup(request):
         )
         student.save()
 
+        auth_login(request, student)
+
         messages.success(request, "Account created successfully.")
         return redirect("home")
 
@@ -47,6 +54,10 @@ def login(request):
     if request.method == "POST":
         email = request.POST.get("email")
         password = request.POST.get("password")
+
+        if not email or not password:
+            messages.error(request, "Email and password are required.")
+            return render(request, "login.html")
 
         student = authenticate(request, email=email, password=password)
 
@@ -66,7 +77,7 @@ def logout_view(request):
     messages.success(request, "Logged out successfully.")
     return redirect("home")
 
-
+@login_required
 def survey(request):
     return render(request, "survey.html")
 

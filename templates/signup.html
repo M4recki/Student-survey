@@ -92,6 +92,7 @@ Survey{% endblock %} {% block content %}
                   placeholder="Create a strong password"
                   required
                 />
+
                 <span class="icon is-small is-left">
                   <i class="fas fa-lock"></i>
                 </span>
@@ -108,6 +109,15 @@ Survey{% endblock %} {% block content %}
                   placeholder="Confirm your password"
                   required
                 />
+                {% if messages %}
+                <div class="notification is-danger mt-5">
+                  <ul>
+                      {% for message in messages %}
+                      <li>{{ message }}</li>
+                      {% endfor %}
+                  </ul>
+              </div>
+              {% endif %}
                 <span class="icon is-small is-left">
                   <i class="fas fa-lock"></i>
                 </span>
