@@ -1,5 +1,10 @@
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import (
+    AbstractBaseUser,
+    BaseUserManager,
+    PermissionsMixin,
+)
 from django.db import models
+
 
 class StudentManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -22,6 +27,7 @@ class StudentManager(BaseUserManager):
 
         return self.create_user(email, password, **extra_fields)
 
+
 class Student(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
@@ -37,3 +43,16 @@ class Student(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+
+class Survey(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_approved = models.BooleanField(default=False)
+    created_by = models.ForeignKey(
+        Student, on_delete=models.CASCADE, related_name="surveys"
+    )
+
+    def __str__(self):
+        return self.title

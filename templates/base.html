@@ -5,12 +5,10 @@
     <meta charset="UTF-8" />
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css"
-    />
+      href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css" />
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
     <script src="{% static 'js/main.js' %}" defer></script>
     <title>{% block title %}Default Title{% endblock %}</title>
@@ -27,8 +25,7 @@
           class="navbar-burger me-2"
           aria-label="menu"
           aria-expanded="true"
-          data-target="navbarBasic"
-        >
+          data-target="navbarBasic">
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
@@ -42,7 +39,7 @@
           <a class="navbar-item" href="/signup">Sign up</a>
           <a class="navbar-item" href="/login">Login</a>
           {% else %}
-          <a class="navbar-item" href="/">Home</a>
+          <p class="navbar-item">Welcome, {{ request.user.first_name }} 👋</p>
           <a class="navbar-item" href="/survey">Survey</a>
           <a class="navbar-item" href="/logout">Logout</a>
           {% endif %}
@@ -57,26 +54,22 @@
           <div class="social-links">
             <a
               href="https://github.com/M4recki?tab=repositories"
-              class="social-icon"
-            >
+              class="social-icon">
               <i class="fab fa-github"></i>
             </a>
             <a
               href="https://www.linkedin.com/in/marek-bara%C5%84ski-516639248/"
-              class="social-icon"
-            >
+              class="social-icon">
               <i class="fab fa-linkedin"></i>
             </a>
             <a
               href="https://progr4mmingskillz.blogspot.com/"
-              class="social-icon"
-            >
+              class="social-icon">
               <i class="fa-solid fa-b"></i>
             </a>
             <a
               href="https://www.facebook.com/marek.baranski.902/"
-              class="social-icon"
-            >
+              class="social-icon">
               <i class="fab fa-facebook"></i>
             </a>
           </div>

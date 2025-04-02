@@ -1,10 +1,14 @@
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from django.contrib.auth.hashers import make_password
-from django.contrib.auth import authenticate, logout, login as auth_login
-from django.contrib.auth.decorators import login_required
 from datetime import datetime
-from .models import Student
+
+from django.contrib import messages
+from django.contrib.auth import authenticate
+from django.contrib.auth import login as auth_login
+from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.hashers import make_password
+from django.shortcuts import redirect, render
+
+from .models import Student, Survey
 
 
 def home(request):
@@ -54,6 +58,7 @@ def login(request):
     if request.method == "POST":
         email = request.POST.get("email")
         password = request.POST.get("password")
+        remember_me = request.POST.get("remember_me")
 
         if not email or not password:
             messages.error(request, "Email and password are required.")
@@ -63,6 +68,12 @@ def login(request):
 
         if student is not None:
             auth_login(request, student)
+
+            if remember_me:
+                request.session.set_expiry(1209600)
+            else:
+                request.session.set_expiry(0)
+
             messages.success(request, "Logged in successfully.")
             return redirect("home")
         else:
@@ -77,9 +88,53 @@ def logout_view(request):
     messages.success(request, "Logged out successfully.")
     return redirect("home")
 
+
 @login_required
 def survey(request):
-    return render(request, "survey.html")
+    surveys = Survey.objects.filter(is_approved=True)
+    return render(request, "survey.html", {"surveys": surveys})
+
+
+@login_required
+def create_survey(request):
+    if request.method == "POST":
+        title = request.POST.get("title")
+        description = request.method.get("description")
+        Survey.objects.create(
+            title=title,
+            description=description,
+            created_by=request.user,
+            is_approved=request.user.is_superuser,
+        )
+        messages.success(request, "Survey created successfully.")
+        return redirect("survey")
+    return render(request, "create_survey.html")
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def manage_surveys(request):
+    surveys = Survey.objects.filter(is_approved=False)
+    if request.method == "POST":
+        survey_id = request.POST.get("survey_id")
+        action = request.POST.get("action")
+        survey = Survey.objects.get(id=survey_id)
+
+        if action == "approve":
+            survey.is_approved = True
+            survey.save()
+            messages.success(request, "Survey approved successfully.")
+        elif action == "edit":
+            title = request.POST.get("title")
+            description = request.POST.get("description")
+            survey.title = title
+            survey.description = description
+            survey.save()
+            messages.success(request, "Survey updated successfully.")
+        elif action == "delete":
+            survey.delete()
+            messages.success(request, "Survey deleted successfully.")
+        return redirect("manage_surveys")
+    return render(request, "manage_surveys.html", {"surveys": surveys})
 
 
 def about(request):
