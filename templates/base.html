@@ -40,7 +40,10 @@
           <a class="navbar-item" href="/login">Login</a>
           {% else %}
           <p class="navbar-item">Welcome, {{ request.user.first_name }} 👋</p>
-          <a class="navbar-item" href="/survey">Survey</a>
+          {% if request.user.is_superuser %}
+          <a class="navbar-item" href="/manage_surveys">Manage Surveys</a>
+          {% endif %}
+          <a class="navbar-item" href="/survey">Surveys</a>
           <a class="navbar-item" href="/logout">Logout</a>
           {% endif %}
           <a class="navbar-item" href="/about">About</a>

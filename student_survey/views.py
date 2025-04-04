@@ -99,7 +99,7 @@ def survey(request):
 def create_survey(request):
     if request.method == "POST":
         title = request.POST.get("title")
-        description = request.method.get("description")
+        description = request.POST.get("description")
         Survey.objects.create(
             title=title,
             description=description,

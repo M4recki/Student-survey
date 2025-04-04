@@ -210,6 +210,14 @@
   color: white;
 }
 
+.social-icon-container {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 8px;
+}
+
 /* About page */
 
 .about-hero {

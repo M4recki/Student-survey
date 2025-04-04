@@ -1,1 +1,144 @@
-<!-- TODO: -->
+{% extends "base.html" %} {% load static %} {% block title %}Create Survey -
+Student Survey{% endblock %} {% block content %}
+<!-- Create Survey Hero Section -->
+<section class="hero is-medium">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-vcentered">
+        <div class="column is-6">
+          <h1 class="title is-1 has-text-white">Create a Survey</h1>
+          <h2 class="subtitle is-4 has-text-white-bis my-5">
+            Design Your Own Educational Feedback Survey
+          </h2>
+          <p class="is-size-5 mb-5">
+            Craft questions that address your specific areas of interest and
+            help improve the educational experience.
+          </p>
+        </div>
+        <div class="column icon-block is-6">
+          <span class="big-icon is-large mt-6">
+            <i class="fa-solid fa-clipboard-list is-hidden-touch"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Survey Creation Form Section -->
+<section class="section">
+  <div class="container mt-6">
+    <div class="columns">
+      <div class="column is-8 is-offset-2">
+        <div class="box">
+          <h2 class="title is-3 has-text-centered mb-6">Survey Details</h2>
+          I
+          <form method="post" action="{% url 'create_survey' %}">
+            {% csrf_token %}
+
+            <div class="field">
+              <label class="label">Survey Title</label>
+              <div class="control has-icons-left">
+                <input
+                  class="input"
+                  type="text"
+                  name="title"
+                  placeholder="Enter survey title"
+                  required />
+                <span class="icon is-small is-left">
+                  <i class="fas fa-heading"></i>
+                </span>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label">Description</label>
+              <div class="control">
+                <textarea
+                  class="textarea"
+                  name="description"
+                  placeholder="Provide a brief description of your survey purpose"
+                  required></textarea>
+              </div>
+            </div>
+
+            <div class="notification is-light is-info my-4">
+              <p>
+                <span class="icon"><i class="fas fa-info-circle"></i></span>
+                <strong>Note:</strong> All survey submissions require approval
+                from administrators before they become available to students.
+              </p>
+            </div>
+
+            <div class="field pt-4">
+              <div class="control">
+                <button class="button is-primary is-fullwidth" type="submit">
+                  Submit Survey for Approval
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Survey Guidelines Section -->
+<section class="section bg-darker">
+  <div class="container">
+    <h2 class="title section-title has-text-centered mb-6">
+      Survey Creation Guidelines
+    </h2>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="columns">
+          <div class="column is-3 has-text-right">
+            <div class="social-icon-container">
+              <i class="fas fa-check-circle social-icon fa-fw"></i>
+            </div>
+            <div class="social-icon-container">
+              <i class="fa fa-user-shield social-icon fa-fw"></i>
+            </div>
+            <div class="social-icon-container">
+              <i class="fas fa-balance-scale social-icon fa-fw"></i>
+            </div>
+            <div class="social-icon-container">
+              <i class="fas fa-bullseye social-icon fa-fw"></i>
+            </div>
+          </div>
+          <div class="column is-9 has-text-left">
+            <p class="is-size-6 mt-2">
+              Keep questions clear, concise and respectful
+            </p>
+            <p class="is-size-6 my-5">
+              Ensure anonymity and confidentiality of responses
+            </p>
+            <p class="is-size-6 my-5">
+              Create balanced questions without leading bias
+            </p>
+            <p class="is-size-6 my-5">
+              Focus on actionable feedback that can lead to improvements
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="section cta-section">
+  <div class="container has-text-centered">
+    <h2 class="title is-2 my-6">Ready to See Existing Surveys?</h2>
+    <p class="subtitle is-4 mb-6">
+      Take part in approved surveys and make your voice heard
+    </p>
+    <div class="buttons is-centered">
+      <a href="/survey" class="button is-outlined is-primary is-large">
+        View Available Surveys
+      </a>
+    </div>
+  </div>
+</section>
+{% endblock %}
