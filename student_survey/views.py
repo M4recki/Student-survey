@@ -104,7 +104,7 @@ def create_survey(request):
             title=title,
             description=description,
             created_by=request.user,
-            is_approved=request.user.is_superuser,
+            is_approved=False,
         )
         messages.success(request, "Survey created successfully.")
         return redirect("survey")

@@ -41,20 +41,20 @@ Student Survey{% endblock %} {% block content %}
               <p class="mb-3">{{ survey.description }}</p>
               <p class="is-size-7">
                 <strong>Created by:</strong> {{ survey.created_by.first_name }}
-                {{ survey.created_by.last_name }} ({{ survey.created_by.email
-                }})
+                {{ survey.created_by.last_name }} ({{ survey.created_by.email }})
               </p>
               <p class="is-size-7">
-                <strong>Submission Date:</strong> {{ survey.created_at|date:"F
-                j, Y" }}
+                <strong>Submission Date:</strong> {{ survey.created_at|date:"F j, Y" }}
               </p>
             </div>
             <div class="column is-5">
               <div class="buttons is-right">
-                <!-- FIXME: -->
                 <button
-                  class="button is-primary"
-                  onclick="showEditModal({{ survey.id }}, '{{ survey.title }}', '{{ survey.description }}')">
+                  class="button is-primary is-outlined"
+                  data-id="{{ survey.id }}"
+                  data-title="{{ survey.title }}"
+                  data-description="{{ survey.description }}"
+                  id="edit-survey-{{ survey.id }}">
                   <span class="icon"><i class="fas fa-edit"></i></span>
                   <span>Edit</span>
                 </button>
@@ -73,10 +73,10 @@ Student Survey{% endblock %} {% block content %}
                     <span>Approve</span>
                   </button>
                 </form>
-                <!-- FIXME: -->
                 <button
                   class="button is-danger"
-                  onclick="showDeleteModal({{ survey.id }})">
+                  data-id="{{ survey.id }}"
+                  id="delete-survey-{{ survey.id }}">
                   <span class="icon"><i class="fas fa-trash"></i></span>
                   <span>Delete</span>
                 </button>
@@ -181,6 +181,26 @@ Student Survey{% endblock %} {% block content %}
 
 <!-- JavaScript for Modals -->
 <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var editButtons = document.querySelectorAll('[id^="edit-survey-"]');
+    editButtons.forEach(function (button) {
+      button.addEventListener("click", function () {
+        var id = this.getAttribute("data-id");
+        var title = this.getAttribute("data-title");
+        var description = this.getAttribute("data-description");
+        showEditModal(id, title, description);
+      });
+    });
+
+    var deleteButtons = document.querySelectorAll('[id^="delete-survey-"]');
+    deleteButtons.forEach(function (button) {
+      button.addEventListener("click", function () {
+        var id = this.getAttribute("data-id");
+        showDeleteModal(id);
+      });
+    });
+  });
+
   function showEditModal(id, title, description) {
     document.getElementById("edit_survey_id").value = id;
     document.getElementById("edit_title").value = title;
