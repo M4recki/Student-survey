@@ -148,3 +148,60 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+// JavaScript for Modals
+
+document.addEventListener("DOMContentLoaded", function () {
+  var editButtons = document.querySelectorAll('[id^="edit-survey-"]');
+  editButtons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      var id = this.getAttribute("data-id");
+      var title = this.getAttribute("data-title");
+      var description = this.getAttribute("data-description");
+      showEditModal(id, title, description);
+    });
+  });
+
+  var deleteButtons = document.querySelectorAll('[id^="delete-survey-"]');
+  deleteButtons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      var id = this.getAttribute("data-id");
+      showDeleteModal(id);
+    });
+  });
+});
+
+function showEditModal(id, title, description) {
+  document.getElementById("edit_survey_id").value = id;
+  document.getElementById("edit_title").value = title;
+  document.getElementById("edit_description").value = description;
+  document.getElementById("editModal").classList.add("is-active");
+}
+
+function closeEditModal() {
+  document.getElementById("editModal").classList.remove("is-active");
+}
+
+function submitEditForm() {
+  document.getElementById("editForm").submit();
+}
+
+function showDeleteModal(id) {
+  document.getElementById("delete_survey_id").value = id;
+  document.getElementById("deleteModal").classList.add("is-active");
+}
+
+function closeDeleteModal() {
+  document.getElementById("deleteModal").classList.remove("is-active");
+}
+
+// Show the delete modal in the surveys page
+
+function showDeleteModal(id) {
+  document.getElementById("delete_survey_id").value = id;
+  document.getElementById("deleteModal").classList.add("is-active");
+}
+
+function closeDeleteModal() {
+  document.getElementById("deleteModal").classList.remove("is-active");
+}
+
