@@ -51,10 +51,12 @@ Student Survey{% endblock %} {% block content %}
             </div>
             <div class="column is-5">
               <div class="buttons is-right">
-                <!-- FIXME: -->
                 <button
                   class="button is-primary"
-                  onclick="showEditModal({{ survey.id }}, '{{ survey.title }}', '{{ survey.description }}')">
+                  data-survey-id="{{ survey.id }}"
+                  data-survey-title="{{ survey.title|escapejs }}"
+                  data-survey-description="{{ survey.description|escapejs }}"
+                  onclick="showEditModal(this.dataset.surveyId, this.dataset.surveyTitle, this.dataset.surveyDescription)">
                   <span class="icon"><i class="fas fa-edit"></i></span>
                   <span>Edit</span>
                 </button>
@@ -73,10 +75,9 @@ Student Survey{% endblock %} {% block content %}
                     <span>Approve</span>
                   </button>
                 </form>
-                <!-- FIXME: -->
                 <button
                   class="button is-danger"
-                  onclick="showDeleteModal({{ survey.id }})">
+                  onclick="showDeleteModal('{{ survey.id }}')">
                   <span class="icon"><i class="fas fa-trash"></i></span>
                   <span>Delete</span>
                 </button>

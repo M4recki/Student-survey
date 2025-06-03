@@ -56,3 +56,44 @@ class Survey(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Question(models.Model):
+    QUESTION_TYPES = [
+        ("radio", "Single choice"),
+        ("checkbox", "Multiple choice"),
+        ("text", "Text response"),
+    ]
+    survey = models.ForeignKey(
+        Survey, on_delete=models.CASCADE, related_name="questions"
+    )
+    text = models.CharField(max_length=500)
+    question_type = models.CharField(max_length=20, choices=QUESTION_TYPES)
+
+    def __str__(self):
+        return self.text
+
+
+class Choice(models.Model):
+    question = models.ForeignKey(
+        Question, on_delete=models.CASCADE, related_name="choices"
+    )
+    text = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.text
+
+
+class Response(models.Model):
+    survey = models.ForeignKey(Survey, on_delete=models.CASCADE)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    submitted_at = models.DateTimeField(auto_now_add=True)
+
+
+class Answer(models.Model):
+    response = models.ForeignKey(
+        Response, on_delete=models.CASCADE, related_name="answers"
+    )
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    choice = models.ForeignKey(Choice, null=True, blank=True, on_delete=models.SET_NULL)
+    text = models.TextField(blank=True)
