@@ -41,22 +41,20 @@ Student Survey{% endblock %} {% block content %}
               <p class="mb-3">{{ survey.description }}</p>
               <p class="is-size-7">
                 <strong>Created by:</strong> {{ survey.created_by.first_name }}
-                {{ survey.created_by.last_name }} ({{ survey.created_by.email
-                }})
+                {{ survey.created_by.last_name }} ({{ survey.created_by.email }})
               </p>
               <p class="is-size-7">
-                <strong>Submission Date:</strong> {{ survey.created_at|date:"F
-                j, Y" }}
+                <strong>Submission Date:</strong> {{ survey.created_at|date:"F j, Y" }}
               </p>
             </div>
             <div class="column is-5">
               <div class="buttons is-right">
                 <button
-                  class="button is-primary"
-                  data-survey-id="{{ survey.id }}"
-                  data-survey-title="{{ survey.title|escapejs }}"
-                  data-survey-description="{{ survey.description|escapejs }}"
-                  onclick="showEditModal(this.dataset.surveyId, this.dataset.surveyTitle, this.dataset.surveyDescription)">
+                  class="button is-primary is-outlined"
+                  data-id="{{ survey.id }}"
+                  data-title="{{ survey.title }}"
+                  data-description="{{ survey.description }}"
+                  id="edit-survey-{{ survey.id }}">
                   <span class="icon"><i class="fas fa-edit"></i></span>
                   <span>Edit</span>
                 </button>
@@ -77,7 +75,8 @@ Student Survey{% endblock %} {% block content %}
                 </form>
                 <button
                   class="button is-danger"
-                  onclick="showDeleteModal('{{ survey.id }}')">
+                  data-id="{{ survey.id }}"
+                  id="delete-survey-{{ survey.id }}">
                   <span class="icon"><i class="fas fa-trash"></i></span>
                   <span>Delete</span>
                 </button>
@@ -180,35 +179,8 @@ Student Survey{% endblock %} {% block content %}
   </div>
 </div>
 
-<!-- JavaScript for Modals -->
-<script>
-  function showEditModal(id, title, description) {
-    document.getElementById("edit_survey_id").value = id;
-    document.getElementById("edit_title").value = title;
-    document.getElementById("edit_description").value = description;
-    document.getElementById("editModal").classList.add("is-active");
-  }
-
-  function closeEditModal() {
-    document.getElementById("editModal").classList.remove("is-active");
-  }
-
-  function submitEditForm() {
-    document.getElementById("editForm").submit();
-  }
-
-  function showDeleteModal(id) {
-    document.getElementById("delete_survey_id").value = id;
-    document.getElementById("deleteModal").classList.add("is-active");
-  }
-
-  function closeDeleteModal() {
-    document.getElementById("deleteModal").classList.remove("is-active");
-  }
-</script>
-
 <!-- Admin CTA Section -->
-<section class="section cta-section">
+<section class="section dark-section cta-section">
   <div class="container has-text-centered">
     <h2 class="title is-2 my-6">View All Approved Surveys</h2>
     <p class="subtitle is-4 mb-6">

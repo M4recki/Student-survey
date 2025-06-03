@@ -89,6 +89,14 @@ def logout_view(request):
 @login_required
 def survey(request):
     surveys = Survey.objects.filter(is_approved=True)
+
+    if request.method == "POST":
+        survey_id = request.POST.get("survey_id")
+        survey = Survey.objects.get(id=survey_id)
+        survey.delete()
+        messages.success(request, "Survey deleted successfully.")
+        return redirect("survey")
+
     return render(request, "survey.html", {"surveys": surveys})
 
 
@@ -101,7 +109,7 @@ def create_survey(request):
             title=title,
             description=description,
             created_by=request.user,
-            is_approved=request.user.is_superuser,
+            is_approved=False,
         )
         messages.success(request, "Survey created successfully.")
         return redirect("survey")
