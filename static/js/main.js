@@ -205,3 +205,32 @@ function closeDeleteModal() {
   document.getElementById("deleteModal").classList.remove("is-active");
 }
 
+// Add options dynamically in the survey creation form
+
+function addOption() {
+  const optionsList = document.getElementById("options_list");
+  const count = optionsList.children.length + 1;
+  const div = document.createElement("div");
+  div.className = "control mb-2";
+  div.innerHTML = `<input class="input option-input" type="text" name="options[]" placeholder="Option ${count}" required>`;
+  optionsList.appendChild(div);
+}
+
+function toggleOptions() {
+  const type = document.getElementById("question_type").value;
+  const optionsContainer = document.getElementById("options_container");
+  if (type === "radio" || type === "checkbox") {
+    optionsContainer.style.display = "";
+    // Ensure at least two options
+    if (document.querySelectorAll(".option-input").length < 2) {
+      addOption();
+    }
+  } else {
+    optionsContainer.style.display = "none";
+  }
+}
+
+window.onload = toggleOptions;
+
+window.addOption = addOption;
+window.toggleOptions = toggleOptions;

@@ -1,6 +1,7 @@
 /* Colors */
 
 :root {
+  --easter-purple: #d072ff;
   --primary-color: #55007f;
   --primary-dark: #4a036b;
   --dark-purple: #2d0543;
@@ -13,7 +14,7 @@
 /* Navbar */
 
 .navbar {
-  background-color: var(--bg-darker);
+  background-color: black;
   border-bottom: 1px solid var(--primary-dark);
   position: fixed;
   width: 100%;
@@ -202,17 +203,17 @@
 
 /* Buttons, icons and cards */
 
-.button.is-primary {
+.button.is-purple {
   background-color: var(--bg-darker);
   color: var(--primary-color);
   border: 1px solid var(--primary-color);
 }
 
-.button.is-primary:hover {
+.button.is-purple:hover {
   background-color: #2a3036;
 }
 
-.button.is-outlined.is-primary {
+.button.is-outlined.is-purple {
   border-color: var(--primary-color);
   color: var(--primary-color);
 }
@@ -228,6 +229,20 @@
   align-items: center;
   justify-content: flex-end;
   margin-bottom: 8px;
+}
+.select.is-purple,
+.input.is-purple,
+.textarea.is-purple {
+  border: 1px solid var(--primary-color);
+  background-color: transparent;
+  color: var(--primary-color);
+}
+
+.select.is-purple:focus,
+.input.is-purple:focus,
+.textarea.is-purple:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px var(--primary-color);
 }
 
 /* About page */
@@ -268,7 +283,7 @@
 .icon-block .big-icon {
   padding: 2.5rem;
   margin-bottom: 1rem;
-  color: var(--primary-color);
+  color: var(--easter-purple);
   font-size: 15rem;
   transition: transform 0.3s ease;
 }

@@ -1,28 +1,28 @@
 {% extends "base.html" %} {% load static %} {% block title %}Login - Student
 Survey{% endblock %} {% block content %}
 <section class="hero is-medium">
-    <div class="hero-body">
-      <div class="container">
-        <div class="columns is-vcentered">
-          <div class="column is-6">
-            <h1 class="title is-1 has-text-white">Log in to your account</h1>
-            <h2 class="subtitle is-4 has-text-white-bis my-5">
-                Access Your Student Survey Dashboard
-              </h2>
-              <p class="is-size-5 mb-5">
-                Log in to provide valuable feedback, track your survey history, and
-                contribute to improving educational experiences.
-              </p>
-          </div>
-          <div class="column icon-block is-6">
-            <span class="big-icon is-large mt-6">
-              <i class="fa-solid fa-user-check is-hidden-touch"></i>
-            </span>
-          </div>
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-vcentered">
+        <div class="column is-6">
+          <h1 class="title is-1 has-text-white">Log in to your account</h1>
+          <h2 class="subtitle is-4 has-text-white-bis my-5">
+            Access Your Student Survey Dashboard
+          </h2>
+          <p class="is-size-5 mb-5">
+            Log in to provide valuable feedback, track your survey history, and
+            contribute to improving educational experiences.
+          </p>
+        </div>
+        <div class="column icon-block is-6">
+          <span class="big-icon is-large mt-6">
+            <i class="fa-solid fa-user-check is-hidden-touch"></i>
+          </span>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
 <!-- Login Section -->
 <section class="section">
@@ -41,8 +41,7 @@ Survey{% endblock %} {% block content %}
                   type="email"
                   name="email"
                   placeholder="Enter your institutional email"
-                  required
-                />
+                  required />
                 <span class="icon is-small is-left">
                   <i class="fas fa-envelope"></i>
                 </span>
@@ -57,25 +56,22 @@ Survey{% endblock %} {% block content %}
                   type="password"
                   name="password"
                   placeholder="Enter your password"
-                  required
-                />
+                  required />
                 {% if messages %}
                 <div class="notification is-danger mt-5">
                   <ul>
-                      {% for message in messages %}
-                      <li>{{ message }}</li>
-                      {% endfor %}
+                    {% for message in messages %}
+                    <li>{{ message }}</li>
+                    {% endfor %}
                   </ul>
-              </div>
-              {% endif %}
+                </div>
+                {% endif %}
                 <span class="icon is-small is-left">
                   <i class="fas fa-lock"></i>
                 </span>
               </div>
               <p class="help my-4">
-                <a href="/" class="contact-icon">
-                  Forgot Password?
-                </a>
+                <a href="/" class="contact-icon"> Forgot Password? </a>
               </p>
             </div>
 
@@ -90,7 +86,7 @@ Survey{% endblock %} {% block content %}
 
             <div class="field pt-4">
               <div class="control">
-                <button class="button is-primary is-fullwidth" type="submit">
+                <button class="button is-purple is-fullwidth" type="submit">
                   Log In
                 </button>
               </div>
@@ -100,9 +96,7 @@ Survey{% endblock %} {% block content %}
           <div class="has-text-centered my-6">
             <p>
               Don't have an account?
-              <a href="/signup" class="contact-icon">
-                Create Account
-              </a>
+              <a href="/signup" class="contact-icon"> Create Account </a>
             </p>
           </div>
 

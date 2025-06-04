@@ -32,7 +32,6 @@ Student Survey{% endblock %} {% block content %}
       <div class="column is-8 is-offset-2">
         <div class="box">
           <h2 class="title is-3 has-text-centered mb-6">Survey Details</h2>
-          I
           <form method="post" action="{% url 'create_survey' %}">
             {% csrf_token %}
 
@@ -40,7 +39,7 @@ Student Survey{% endblock %} {% block content %}
               <label class="label">Survey Title</label>
               <div class="control has-icons-left">
                 <input
-                  class="input"
+                  class="input is-purple"
                   type="text"
                   name="title"
                   placeholder="Enter survey title"
@@ -55,11 +54,57 @@ Student Survey{% endblock %} {% block content %}
               <label class="label">Description</label>
               <div class="control">
                 <textarea
-                  class="textarea"
+                  class="textarea is-purple"
                   name="description"
                   placeholder="Provide a brief description of your survey purpose"
                   required></textarea>
               </div>
+            </div>
+
+            <!-- FIXME: Fix rounded corner -->
+            <!-- Dynamic Question Example -->
+            <div class="field">
+              <label class="label">Question Type</label>
+              <div class="control">
+                <div class="select is-purple is-fullwidth">
+                  <select
+                    id="question_type"
+                    name="question_type"
+                    onchange="toggleOptions()">
+                    <option value="radio">Single choice</option>
+                    <option value="checkbox">Multiple choice</option>
+                    <option value="text">Text response</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div id="options_container" class="field">
+              <label class="label">Options</label>
+              <div id="options_list">
+                <div class="control mb-2">
+                  <input
+                    class="input option-input is-purple"
+                    type="text"
+                    name="options[]"
+                    placeholder="Option 1"
+                    required />
+                </div>
+                <div class="control mb-2">
+                  <input
+                    class="input option-input is-purple"
+                    type="text"
+                    name="options[]"
+                    placeholder="Option 2"
+                    required />
+                </div>
+              </div>
+              <button
+                type="button"
+                class="button is-small is-purple mt-2"
+                onclick="addOption()">
+                + Add Option
+              </button>
             </div>
 
             <div class="notification is-light is-info my-4">
@@ -72,7 +117,7 @@ Student Survey{% endblock %} {% block content %}
 
             <div class="field pt-4">
               <div class="control">
-                <button class="button is-primary is-fullwidth" type="submit">
+                <button class="button is-purple is-fullwidth" type="submit">
                   Submit Survey for Approval
                 </button>
               </div>
@@ -135,7 +180,7 @@ Student Survey{% endblock %} {% block content %}
       Take part in approved surveys and make your voice heard
     </p>
     <div class="buttons is-centered">
-      <a href="/survey" class="button is-outlined is-primary is-large">
+      <a href="/survey" class="button is-outlined is-purple is-large">
         View Available Surveys
       </a>
     </div>

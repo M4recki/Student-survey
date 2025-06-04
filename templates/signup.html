@@ -42,8 +42,7 @@ Survey{% endblock %} {% block content %}
                   type="text"
                   name="first_name"
                   placeholder="Enter your first name"
-                  required
-                />
+                  required />
                 <span class="icon is-small is-left">
                   <i class="fas fa-user"></i>
                 </span>
@@ -58,8 +57,7 @@ Survey{% endblock %} {% block content %}
                   type="text"
                   name="last_name"
                   placeholder="Enter your last name"
-                  required
-                />
+                  required />
                 <span class="icon is-small is-left">
                   <i class="fas fa-user"></i>
                 </span>
@@ -74,8 +72,7 @@ Survey{% endblock %} {% block content %}
                   type="email"
                   name="email"
                   placeholder="Enter your institutional email"
-                  required
-                />
+                  required />
                 <span class="icon is-small is-left">
                   <i class="fas fa-envelope"></i>
                 </span>
@@ -90,8 +87,7 @@ Survey{% endblock %} {% block content %}
                   type="password"
                   name="password"
                   placeholder="Create a strong password"
-                  required
-                />
+                  required />
 
                 <span class="icon is-small is-left">
                   <i class="fas fa-lock"></i>
@@ -107,17 +103,16 @@ Survey{% endblock %} {% block content %}
                   type="password"
                   name="confirm_password"
                   placeholder="Confirm your password"
-                  required
-                />
+                  required />
                 {% if messages %}
                 <div class="notification is-danger mt-5">
                   <ul>
-                      {% for message in messages %}
-                      <li>{{ message }}</li>
-                      {% endfor %}
+                    {% for message in messages %}
+                    <li>{{ message }}</li>
+                    {% endfor %}
                   </ul>
-              </div>
-              {% endif %}
+                </div>
+                {% endif %}
                 <span class="icon is-small is-left">
                   <i class="fas fa-lock"></i>
                 </span>
@@ -135,7 +130,7 @@ Survey{% endblock %} {% block content %}
 
             <div class="field pt-4">
               <div class="control">
-                <button class="button is-primary is-fullwidth" type="submit">
+                <button class="button is-purple is-fullwidth" type="submit">
                   Create Account
                 </button>
               </div>

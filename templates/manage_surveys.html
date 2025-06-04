@@ -41,16 +41,18 @@ Student Survey{% endblock %} {% block content %}
               <p class="mb-3">{{ survey.description }}</p>
               <p class="is-size-7">
                 <strong>Created by:</strong> {{ survey.created_by.first_name }}
-                {{ survey.created_by.last_name }} ({{ survey.created_by.email }})
+                {{ survey.created_by.last_name }} ({{ survey.created_by.email
+                }})
               </p>
               <p class="is-size-7">
-                <strong>Submission Date:</strong> {{ survey.created_at|date:"F j, Y" }}
+                <strong>Submission Date:</strong> {{ survey.created_at|date:"F
+                j, Y" }}
               </p>
             </div>
             <div class="column is-5">
               <div class="buttons is-right">
                 <button
-                  class="button is-primary is-outlined"
+                  class="button is-purple is-outlined"
                   data-id="{{ survey.id }}"
                   data-title="{{ survey.title }}"
                   data-description="{{ survey.description }}"
@@ -140,7 +142,7 @@ Student Survey{% endblock %} {% block content %}
       </form>
     </section>
     <footer class="modal-card-foot">
-      <button class="button is-primary" onclick="submitEditForm()">
+      <button class="button is-purple" onclick="submitEditForm()">
         Save Changes
       </button>
       <button class="button" onclick="closeEditModal()">Cancel</button>
@@ -187,7 +189,7 @@ Student Survey{% endblock %} {% block content %}
       See surveys that are currently available to students
     </p>
     <div class="buttons is-centered">
-      <a href="/survey" class="button is-outlined is-primary is-large">
+      <a href="/survey" class="button is-outlined is-purple is-large">
         View Active Surveys
       </a>
     </div>
