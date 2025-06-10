@@ -40,13 +40,13 @@ Student Survey{% endblock %} {% block content %}
               <h3 class="title is-4">{{ survey.title }}</h3>
               <p class="mb-3">{{ survey.description }}</p>
               <p class="is-size-7">
-                <strong>Created by:</strong> {{ survey.created_by.first_name }}
-                {{ survey.created_by.last_name }} ({{ survey.created_by.email
-                }})
+                <strong>Created by:</strong>
+                {{ survey.created_by.first_name }} 
+                {{ survey.created_by.last_name }} ({{ survey.created_by.email }})
               </p>
               <p class="is-size-7">
-                <strong>Submission Date:</strong> {{ survey.created_at|date:"F
-                j, Y" }}
+                <strong>Submission Date:</strong>
+                {{ survey.created_at|date:"F j, Y" }}
               </p>
             </div>
             <div class="column is-5">

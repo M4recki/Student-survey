@@ -61,51 +61,58 @@ Student Survey{% endblock %} {% block content %}
               </div>
             </div>
 
-            <!-- FIXME: Fix rounded corner -->
-            <!-- Dynamic Question Example -->
-            <div class="field">
-              <label class="label">Question Type</label>
-              <div class="control">
-                <div class="select is-purple is-fullwidth">
-                  <select
-                    id="question_type"
-                    name="question_type"
-                    onchange="toggleOptions()">
-                    <option value="radio">Single choice</option>
-                    <option value="checkbox">Multiple choice</option>
-                    <option value="text">Text response</option>
-                  </select>
+            <!-- Dynamic Question -->
+            <div id="questions_container">
+              <div class="box question-box mb-5">
+                <div class="field">
+                  <label class="label">Question Type</label>
+                  <div class="control">
+                    <div class="select is-purple is-fullwidth">
+                      <select
+                        name="questions[0][type]"
+                        onchange="toggleOptions(this)">
+                        <option value="radio">Single choice</option>
+                        <option value="checkbox">Multiple choice</option>
+                        <option value="text">Text response</option>
+                      </select>
+                    </div>
+                  </div>
                 </div>
+                <div class="field">
+                  <label class="label">Question</label>
+                  <div class="control">
+                    <input
+                      class="input is-purple"
+                      type="text"
+                      name="questions[0][text]"
+                      placeholder="Enter your question"
+                      required />
+                  </div>
+                </div>
+                <div class="field options-container">
+                  <label class="label">Options</label>
+                  <div class="options-list"></div>
+                  <button
+                    type="button"
+                    class="button is-small is-purple mt-2"
+                    onclick="addOption(this)">
+                    + Add Option
+                  </button>
+                </div>
+                <button
+                  type="button"
+                  class="button is-danger is-small mt-2"
+                  onclick="removeQuestion(this)">
+                  Remove Question
+                </button>
               </div>
             </div>
-
-            <div id="options_container" class="field">
-              <label class="label">Options</label>
-              <div id="options_list">
-                <div class="control mb-2">
-                  <input
-                    class="input option-input is-purple"
-                    type="text"
-                    name="options[]"
-                    placeholder="Option 1"
-                    required />
-                </div>
-                <div class="control mb-2">
-                  <input
-                    class="input option-input is-purple"
-                    type="text"
-                    name="options[]"
-                    placeholder="Option 2"
-                    required />
-                </div>
-              </div>
-              <button
-                type="button"
-                class="button is-small is-purple mt-2"
-                onclick="addOption()">
-                + Add Option
-              </button>
-            </div>
+            <button
+              type="button"
+              class="button is-purple mb-5"
+              onclick="addQuestion()">
+              + Add Question
+            </button>
 
             <div class="notification is-light is-info my-4">
               <p>

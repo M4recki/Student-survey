@@ -205,7 +205,6 @@
 
 .button.is-purple {
   background-color: var(--bg-darker);
-  color: var(--primary-color);
   border: 1px solid var(--primary-color);
 }
 
@@ -230,21 +229,29 @@
   justify-content: flex-end;
   margin-bottom: 8px;
 }
-.select.is-purple,
+
 .input.is-purple,
 .textarea.is-purple {
   border: 1px solid var(--primary-color);
   background-color: transparent;
-  color: var(--primary-color);
+  color: white;
 }
 
-.select.is-purple:focus,
 .input.is-purple:focus,
 .textarea.is-purple:focus {
   border-color: var(--primary-color);
   box-shadow: 0 0 0 2px var(--primary-color);
 }
 
+.select.is-purple select {
+  border: 1px solid var(--primary-color);
+  border-radius: 5px;
+  background-color: transparent;
+}
+
+.select.is-purple select option {
+  background-color: var(--bg-dark);
+}
 /* About page */
 
 .about-hero {

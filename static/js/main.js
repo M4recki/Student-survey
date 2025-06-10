@@ -221,7 +221,7 @@ function toggleOptions() {
   const optionsContainer = document.getElementById("options_container");
   if (type === "radio" || type === "checkbox") {
     optionsContainer.style.display = "";
-    // Ensure at least two options
+
     if (document.querySelectorAll(".option-input").length < 2) {
       addOption();
     }
@@ -229,6 +229,127 @@ function toggleOptions() {
     optionsContainer.style.display = "none";
   }
 }
+
+// JavaScript for the survey creation form
+
+let questionCount = 1;
+
+function addQuestion() {
+  const questionsContainer = document.getElementById("questions_container");
+  const idx = questionCount++;
+  const box = document.createElement("div");
+  box.className = "box question-box mb-5";
+  box.innerHTML = `
+    <div class="field">
+      <label class="label">Question Type</label>
+      <div class="control">
+        <div class="select is-purple is-fullwidth">
+          <select name="questions[${idx}][type]" onchange="toggleOptions(this)">
+            <option value="radio">Single choice</option>
+            <option value="checkbox">Multiple choice</option>
+            <option value="text">Text response</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="field">
+      <label class="label">Question</label>
+      <div class="control">
+        <input
+          class="input is-purple"
+          type="text"
+          name="questions[${idx}][text]"
+          placeholder="Enter your question"
+          required />
+      </div>
+    </div>
+    <div class="field options-container">
+      <label class="label">Options</label>
+      <div class="options-list"></div>
+      <button
+        type="button"
+        class="button is-small is-purple mt-2"
+        onclick="addOption(this)">
+        + Add Option
+      </button>
+    </div>
+    <button
+      type="button"
+      class="button is-danger is-small mt-2"
+      onclick="removeQuestion(this)">
+      Remove Question
+    </button>
+  `;
+  questionsContainer.appendChild(box);
+
+  const select = box.querySelector("select");
+  toggleOptions(select);
+}
+
+function renderOption(questionIdx, optionIdx, type) {
+  // type: "radio" | "checkbox"
+  return `
+    <div class="field is-flex is-align-items-center mb-2 option-row">
+      <label class="radio mr-2" style="pointer-events:none; margin-bottom:0;">
+        <input type="${type}" disabled style="vertical-align:middle;">
+      </label>
+      <input class="input is-purple option-input" type="text" name="questions[${questionIdx}][options][]" placeholder="Option ${optionIdx + 1}" required style="flex:1;">
+    </div>
+  `;
+}
+
+function addOption(btn) {
+  const questionBox = btn.closest(".question-box");
+  const optionsList = questionBox.querySelector(".options-list");
+  const select = questionBox.querySelector("select");
+  const type = select.value;
+  const questionIdx = getQuestionIdx(questionBox);
+  const optionIdx = optionsList.querySelectorAll(".option-row").length;
+  optionsList.insertAdjacentHTML("beforeend", renderOption(questionIdx, optionIdx, type));
+}
+
+function toggleOptions(select) {
+  const questionBox = select.closest(".question-box");
+  const optionsContainer = questionBox.querySelector(".options-container");
+  const optionsList = optionsContainer.querySelector(".options-list");
+  const type = select.value;
+  const questionIdx = getQuestionIdx(questionBox);
+
+  if (type === "radio" || type === "checkbox") {
+    optionsContainer.style.display = "";
+    optionsList.innerHTML = "";
+    optionsList.insertAdjacentHTML("beforeend", renderOption(questionIdx, 0, type));
+    optionsList.insertAdjacentHTML("beforeend", renderOption(questionIdx, 1, type));
+    optionsContainer.querySelector("button").style.display = "";
+  } else {
+    // Text response: Show only 1 answer input
+    optionsContainer.style.display = "";
+    optionsList.innerHTML = `
+      <div class="field mb-2">
+        <input class="input is-purple" type="text" name="questions[${questionIdx}][text_response]" placeholder="User's answer will appear here" disabled>
+      </div>
+    `;
+    optionsContainer.querySelector("button").style.display = "none";
+  }
+}
+
+function getQuestionIdx(questionBox) {
+  const input = questionBox.querySelector('input[name^="questions"]');
+  return input ? input.name.match(/\d+/)[0] : 0;
+}
+
+function removeQuestion(btn) {
+  btn.closest(".question-box").remove();
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll(".question-box select").forEach(toggleOptions);
+});
+
+window.addQuestion = addQuestion;
+window.addOption = addOption;
+window.toggleOptions = toggleOptions;
+window.removeQuestion = removeQuestion;
 
 window.onload = toggleOptions;
 
