@@ -105,12 +105,28 @@ def create_survey(request):
     if request.method == "POST":
         title = request.POST.get("title")
         description = request.POST.get("description")
-        Survey.objects.create(
+        survey = Survey.objects.create(  # <-- poprawka tutaj!
             title=title,
             description=description,
             created_by=request.user,
             is_approved=False,
         )
+
+        idx = 0
+        while True:
+            q_text = request.POST.get(f"questions[{idx}][text]")
+            q_type = request.POST.get(f"questions[{idx}][type]")
+            if not q_text:
+                break
+            question = Question.objects.create(survey=survey, text=q_text, question_type=q_type)
+            if q_type != "text":
+                # ZBIERZ WSZYSTKIE OPCJE JAKO LISTĘ
+                options = request.POST.getlist(f"questions[{idx}][options][]")
+                for opt in options:
+                    if opt.strip():
+                        Choice.objects.create(question=question, text=opt)
+            idx += 1
+
         messages.success(request, "Survey created successfully.")
         return redirect("survey")
     return render(request, "create_survey.html")
