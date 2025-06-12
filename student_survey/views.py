@@ -112,15 +112,17 @@ def create_survey(request):
             is_approved=False,
         )
 
+        # Add questions
         idx = 0
         while True:
             q_text = request.POST.get(f"questions[{idx}][text]")
             q_type = request.POST.get(f"questions[{idx}][type]")
             if not q_text:
                 break
-            question = Question.objects.create(survey=survey, text=q_text, question_type=q_type)
+            question = Question.objects.create(
+                survey=survey, text=q_text, question_type=q_type
+            )
             if q_type != "text":
-                # ZBIERZ WSZYSTKIE OPCJE JAKO LISTĘ
                 options = request.POST.getlist(f"questions[{idx}][options][]")
                 for opt in options:
                     if opt.strip():
@@ -134,7 +136,9 @@ def create_survey(request):
 
 @user_passes_test(lambda u: u.is_superuser)
 def manage_surveys(request):
-    surveys = Survey.objects.filter(is_approved=False)
+    surveys = Survey.objects.filter(is_approved=False).prefetch_related(
+        "questions__choices"
+    )
     if request.method == "POST":
         survey_id = request.POST.get("survey_id")
         action = request.POST.get("action")
@@ -149,6 +153,30 @@ def manage_surveys(request):
             description = request.POST.get("description")
             survey.title = title
             survey.description = description
+            survey.save()
+
+            Question.objects.filter(survey=survey).delete()
+
+            # Add new questions
+            idx = 0
+            while True:
+                q_text = request.POST.get(f"questions[{idx}][text]")
+                q_type = request.POST.get(f"questions[{idx}][type]")
+                if not q_text:
+                    break
+
+                question = Question.objects.create(
+                    survey=survey, text=q_text, question_type=q_type
+                )
+
+                if q_type != "text":
+                    options = request.POST.getlist(f"questions[{idx}][options][]")
+                    for opt in options:
+                        if opt.strip():
+                            Choice.objects.create(question=question, text=opt)
+                idx += 1
+
+            messages.success(request, "Survey updated successfully.")
             survey.save()
             messages.success(request, "Survey updated successfully.")
         elif action == "delete":

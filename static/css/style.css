@@ -394,3 +394,43 @@
     margin: 0.5rem;
   }
 }
+
+/* Modal styles */
+.modal-card {
+  max-height: 90vh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-card-head,
+.modal-card-foot {
+  flex-shrink: 0;
+}
+
+.modal-card-body {
+  flex-grow: 1;
+  overflow-y: auto;
+  max-height: calc(
+    90vh - 130px
+  ); /* 130px to przybliżona wysokość nagłówka i stopki */
+  padding: 20px;
+}
+
+.modal-card-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-card-body::-webkit-scrollbar-track {
+  background: var(--bg-darker);
+  border-radius: 4px;
+}
+
+.modal-card-body::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.modal-card-body::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-dark);
+}

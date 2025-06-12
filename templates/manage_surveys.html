@@ -1,5 +1,8 @@
-{% extends "base.html" %} {% load static %} {% block title %}Manage Surveys -
-Student Survey{% endblock %} {% block content %}
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Manage Surveys - Student Survey{% endblock %}
+{% block content %}
+
 <!-- Admin Hero Section -->
 <section class="hero is-medium">
   <div class="hero-body">
@@ -56,6 +59,13 @@ Student Survey{% endblock %} {% block content %}
                   data-id="{{ survey.id }}"
                   data-title="{{ survey.title }}"
                   data-description="{{ survey.description }}"
+                  data-questions='[{% for q in survey.questions.all %}
+                    {
+                      "text": "{{ q.text|escapejs }}",
+                      "type": "{{ q.question_type }}",
+                      "options": [{% for c in q.choices.all %}"{{ c.text|escapejs }}"{% if not forloop.last %},{% endif %}{% endfor %}]
+                    }{% if not forloop.last %},{% endif %}
+                  {% endfor %}]'
                   id="edit-survey-{{ survey.id }}">
                   <span class="icon"><i class="fas fa-edit"></i></span>
                   <span>Edit</span>
@@ -139,14 +149,23 @@ Student Survey{% endblock %} {% block content %}
               required></textarea>
           </div>
         </div>
+
+        <!-- Container for questions -->
+        <div id="edit_questions_container"></div>
+        <button
+          type="button"
+          class="button is-purple mb-5"
+          onclick="addQuestionToEdit()">
+          + Add Question
+        </button>
       </form>
     </section>
-    <footer class="modal-card-foot">
-      <button class="button is-purple" onclick="submitEditForm()">
-        Save Changes
-      </button>
-      <button class="button" onclick="closeEditModal()">Cancel</button>
-    </footer>
+    <footer class="modal-card-foot" style="justify-content: center;">
+  <button class="button is-success mr-2" onclick="submitEditForm()">
+    Save Changes
+  </button>
+  <button class="button is-danger" onclick="closeEditModal()">Cancel</button>
+</footer>
   </div>
 </div>
 
