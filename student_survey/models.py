@@ -54,6 +54,9 @@ class Survey(models.Model):
         Student, on_delete=models.CASCADE, related_name="surveys"
     )
 
+    def user_has_responded(self, user):
+        return Response.objects.filter(survey=self, student=user).exists()
+
     def __str__(self):
         return self.title
 
@@ -64,11 +67,27 @@ class Question(models.Model):
         ("checkbox", "Multiple choice"),
         ("text", "Text response"),
     ]
-    survey = models.ForeignKey(
-        Survey, on_delete=models.CASCADE, related_name="questions"
-    )
+    survey = models.ForeignKey(Survey, on_delete=models.CASCADE, related_name="questions")
     text = models.CharField(max_length=500)
     question_type = models.CharField(max_length=20, choices=QUESTION_TYPES)
+    order = models.IntegerField(default=0)
+
+    class Meta:
+        ordering = ['question_type', 'order']
+
+    def save(self, *args, **kwargs):
+        # Automatic order assignment
+        if not self.order:
+            if self.question_type == 'text':
+                last_order = Question.objects.filter(survey=self.survey).aggregate(models.Max('order'))['order__max']
+                self.order = (last_order or 0) + 1000
+            else:
+                last_order = Question.objects.filter(
+                    survey=self.survey, 
+                    question_type=self.question_type
+                ).aggregate(models.Max('order'))['order__max']
+                self.order = (last_order or 0) + 1
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.text

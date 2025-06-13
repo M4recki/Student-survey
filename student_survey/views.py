@@ -2,9 +2,10 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.hashers import make_password
+from django.db import models
 from django.shortcuts import redirect, render
 
-from .models import Student, Survey, Question, Choice, Answer
+from .models import Student, Survey, Question, Choice, Answer, Response
 from datetime import datetime
 
 
@@ -97,6 +98,9 @@ def survey(request):
         messages.success(request, "Survey deleted successfully.")
         return redirect("survey")
 
+    for survey in surveys:
+        survey.has_responded = survey.user_has_responded(request.user)  # type: ignore
+
     return render(request, "survey.html", {"surveys": surveys})
 
 
@@ -184,6 +188,56 @@ def manage_surveys(request):
             messages.success(request, "Survey deleted successfully.")
         return redirect("manage_surveys")
     return render(request, "manage_surveys.html", {"surveys": surveys})
+
+
+@login_required
+def take_survey(request, survey_id):
+    survey = Survey.objects.get(id=survey_id)
+
+    if Response.objects.filter(survey=survey, student=request.user).exists():
+        messages.error(request, "You have already completed this survey.")
+        return redirect("survey")
+
+    questions = survey.questions.all().order_by(  # type: ignore
+        models.Case(
+            models.When(question_type="radio", then=0),
+            models.When(question_type="checkbox", then=1),
+            models.When(question_type="text", then=2),
+            default=3,
+            output_field=models.IntegerField(),
+        ),
+        "order",
+    )
+
+    if request.method == "POST":
+        response = Response.objects.create(survey=survey, student=request.user)
+
+        for question in questions:
+            if question.question_type == "text":
+                answer_text = request.POST.get(f"question_{question.id}")
+                if answer_text:
+                    Answer.objects.create(
+                        response=response, question=question, text=answer_text
+                    )
+            elif question.question_type == "checkbox":
+                choice_ids = request.POST.getlist(f"question_{question.id}[]")
+                for choice_id in choice_ids:
+                    Answer.objects.create(
+                        response=response, question=question, choice_id=choice_id
+                    )
+            else:  # radio
+                choice_id = request.POST.get(f"question_{question.id}")
+                if choice_id:
+                    Answer.objects.create(
+                        response=response, question=question, choice_id=choice_id
+                    )
+
+        messages.success(request, "Survey completed successfully!")
+        return redirect("survey")
+
+    return render(
+        request, "take_survey.html", {"survey": survey, "questions": questions}
+    )
 
 
 def about(request):

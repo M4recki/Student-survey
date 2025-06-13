@@ -39,7 +39,11 @@
             <h3 class="title is-4">{{ survey.title }}</h3>
             <p>{{ survey.description }}</p>
             <div class="has-text-centered mt-6">
-              <a href="#" class="button is-purple">Start Survey</a>
+              <a
+                href="{% url 'take_survey' survey.id %}"
+                class="button is-purple"
+                >Start Survey</a
+              >
               {% if request.user.is_superuser %}
               <button
                 class="button is-danger ml-2"

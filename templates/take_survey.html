@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Take Survey - {{ survey.title }}{% endblock %}
+{% block content %}
+
+<!-- Survey Hero Section -->
+<section class="hero is-medium">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-vcentered">
+        <div class="column is-8 is-offset-2">
+          <h1 class="title is-1 has-text-white">{{ survey.title }}</h1>
+          <p class="subtitle is-4 has-text-white-bis my-5">
+            {{ survey.description }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Survey Form Section -->
+<section class="section">
+  <div class="container">
+    <div class="columns">
+      <div class="column is-8 is-offset-2">
+        <div class="box">
+          <form method="post">
+            {% csrf_token %}
+            {% for question in questions %}
+            <div class="field mb-5">
+              <label class="label">{{ question.text }}</label>
+              <div class="control">
+                {% if question.question_type == 'text' %}
+                  <textarea
+                    class="textarea is-purple"
+                    name="question_{{ question.id }}"
+                    required></textarea>
+                {% elif question.question_type == 'radio' %}
+                  {% for choice in question.choices.all %}
+                    <label class="radio is-block mb-2">
+                      <input
+                        type="radio"
+                        name="question_{{ question.id }}"
+                        value="{{ choice.id }}"
+                        required />
+                      {{ choice.text }}
+                    </label>
+                  {% endfor %}
+                {% elif question.question_type == 'checkbox' %}
+                  {% for choice in question.choices.all %}
+                    <label class="checkbox is-block mb-2">
+                      <input
+                        type="checkbox"
+                        name="question_{{ question.id }}[]"
+                        value="{{ choice.id }}" />
+                      {{ choice.text }}
+                    </label>
+                  {% endfor %}
+                {% endif %}
+              </div>
+            </div>
+            {% endfor %}
+            
+            <div class="field">
+              <div class="control">
+                <button type="submit" class="button is-purple is-fullwidth">
+                  Submit Survey
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

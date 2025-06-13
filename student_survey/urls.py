@@ -26,6 +26,7 @@ urlpatterns = [
     path('login/', views.login, name='login'),
     path('logout/', views.logout_view, name='logout'),
     path('survey/', views.survey, name='survey'),
+    path('take_survey/<int:survey_id>/', views.take_survey, name='take_survey'),
     path('create_survey/', views.create_survey, name='create_survey'),
     path('manage_surveys/', views.manage_surveys, name='manage_surveys'),
     path('about/', views.about, name='about'),
