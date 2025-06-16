@@ -38,17 +38,40 @@
           <div class="card-content">
             <h3 class="title is-4">{{ survey.title }}</h3>
             <p>{{ survey.description }}</p>
-            <div class="has-text-centered mt-6">
+
+            <div class="survey-stats has-text-centered my-4">
+              <span class="tag is-info is-medium">
+                <span class="icon">
+                  <i class="fas fa-users"></i>
+                </span>
+                <span>{{ survey.response_count }} responses</span>
+              </span>
+            </div>
+
+            <div class="buttons is-centered mt-6">
+              {% if not survey.has_responded %}
               <a
                 href="{% url 'take_survey' survey.id %}"
-                class="button is-purple"
-                >Start Survey</a
-              >
-              {% if request.user.is_superuser %}
+                class="button is-purple">
+                <span class="icon">
+                  <i class="fas fa-play"></i>
+                </span>
+                <span>Start Survey</span>
+              </a>
+              {% else %}
+              <button class="button is-purple" disabled>
+                <span class="icon">
+                  <i class="fas fa-check"></i>
+                </span>
+                <span>Completed</span>
+              </button>
+              {% endif %} {% if request.user.is_superuser %}
               <button
-                class="button is-danger ml-2"
+                class="button is-danger"
                 onclick="showDeleteModal('{{ survey.id }}')">
-                <span class="icon"><i class="fas fa-trash"></i></span>
+                <span class="icon">
+                  <i class="fas fa-trash"></i>
+                </span>
                 <span>Delete</span>
               </button>
               {% endif %}

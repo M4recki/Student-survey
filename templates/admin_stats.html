@@ -1,0 +1,287 @@
+{% extends "base.html" %} {% load static %} {% block title %}Admin Statistics -
+Student Survey{% endblock %} {% block content %}
+
+<!-- Stats Hero Section -->
+<section class="hero is-medium">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-vcentered">
+        <div class="column is-8 is-offset-2">
+          <h1 class="title is-1 has-text-white">Survey Statistics</h1>
+          <p class="subtitle is-4 has-text-white-bis my-5">
+            Comprehensive analytics of survey responses and user engagement
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Statistics Dashboard -->
+<section class="section">
+  <div class="container">
+    <!-- Summary Cards -->
+    <div class="columns is-multiline mb-6 stats-summary">
+      <div class="column is-3">
+        <div class="stats-card">
+          <p class="heading">Total Surveys</p>
+          <p class="title stat-value">{{ total_surveys }}</p>
+        </div>
+      </div>
+      <div class="column is-3">
+        <div class="stats-card">
+          <p class="heading">Total Responses</p>
+          <p class="title stat-value">{{ total_responses }}</p>
+        </div>
+      </div>
+      <div class="column is-3">
+        <div class="stats-card">
+          <p class="heading">Active Users</p>
+          <p class="title stat-value">{{ active_users }}</p>
+        </div>
+      </div>
+      <div class="column is-3">
+        <div class="stats-card">
+          <p class="heading">Avg. Response Rate</p>
+          <p class="title stat-value">{{ avg_response_rate }}%</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="columns is-multiline">
+      <!-- Survey Responses Over Time -->
+      <div class="column is-6">
+        <div class="stats-card stats-chart">
+          <h3 class="title is-4 mb-4 has-text-white">
+            Survey Responses Over Time
+          </h3>
+          <div class="chart-container">
+            <canvas id="responsesChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Most Popular Surveys -->
+      <div class="column is-6">
+        <div class="stats-card stats-chart">
+          <h3 class="title is-4 mb-4 has-text-white">Most Popular Surveys</h3>
+          <div class="chart-container">
+            <canvas id="popularSurveysChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- User Activity -->
+      <div class="column is-6">
+        <div class="stats-card stats-chart">
+          <h3 class="title is-4 mb-4 has-text-white">User Activity</h3>
+          <div class="chart-container">
+            <canvas id="userActivityChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Response Distribution -->
+      <div class="column is-6">
+        <div class="stats-card stats-chart">
+          <h3 class="title is-4 mb-4 has-text-white">
+            Response Distribution by Question Type
+          </h3>
+          <div class="chart-container">
+            <canvas id="questionTypeChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %} {% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    try {
+      console.log("Raw chart data:", "{{ chart_data|escapejs }}");
+      const chartData = JSON.parse("{{ chart_data|escapejs }}");
+      console.log("Parsed chart data:", chartData);
+
+      if (!chartData) {
+        throw new Error("Chart data is empty or null");
+      }
+
+      // Common chart configuration
+      Chart.defaults.color = "#fff";
+      Chart.defaults.borderColor = "rgba(255, 255, 255, 0.1)";
+
+      const commonOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: "top",
+            labels: {
+              color: "#fff",
+              padding: 20,
+            },
+          },
+        },
+        scales: {
+          x: {
+            grid: {
+              color: "rgba(255, 255, 255, 0.1)",
+            },
+            ticks: {
+              color: "#fff",
+            },
+          },
+          y: {
+            grid: {
+              color: "rgba(255, 255, 255, 0.1)",
+            },
+            ticks: {
+              color: "#fff",
+            },
+          },
+        },
+      };
+
+      console.log("Initializing Responses Chart...");
+      // Responses Over Time Chart
+      const responsesCtx = document.getElementById("responsesChart");
+      if (!responsesCtx) {
+        throw new Error("Cannot find responsesChart canvas element");
+      }
+
+      new Chart(responsesCtx, {
+        type: "line",
+        data: {
+          labels: chartData.responseDates,
+          datasets: [
+            {
+              label: "Responses",
+              data: chartData.responseCounts,
+              borderColor: "#d072ff",
+              backgroundColor: "rgba(208, 114, 255, 0.1)",
+              tension: 0.4,
+              fill: true,
+            },
+          ],
+        },
+        options: commonOptions,
+      });
+
+      console.log("Initializing Popular Surveys Chart...");
+      // Popular Surveys Chart
+      const popularCtx = document.getElementById("popularSurveysChart");
+      if (!popularCtx) {
+        throw new Error("Cannot find popularSurveysChart canvas element");
+      }
+
+      new Chart(popularCtx, {
+        type: "bar",
+        data: {
+          labels: chartData.popularSurveyLabels,
+          datasets: [
+            {
+              label: "Responses",
+              data: chartData.popularSurveyCounts,
+              backgroundColor: "#55007f",
+              borderColor: "#d072ff",
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          ...commonOptions,
+          indexAxis: "y",
+          plugins: {
+            legend: {
+              display: false,
+            },
+          },
+        },
+      });
+
+      console.log("Initializing User Activity Chart...");
+      // User Activity Chart
+      const activityCtx = document.getElementById("userActivityChart");
+      if (!activityCtx) {
+        throw new Error("Cannot find userActivityChart canvas element");
+      }
+
+      new Chart(activityCtx, {
+        type: "pie",
+        data: {
+          labels: ["Active Users", "Inactive Users"],
+          datasets: [
+            {
+              data: [
+                chartData.userActivityData.activeUsers,
+                chartData.userActivityData.totalUsers -
+                  chartData.userActivityData.activeUsers,
+              ],
+              backgroundColor: ["#d072ff", "#2d0543"],
+              borderColor: "#55007f",
+              borderWidth: 2,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: "top",
+              labels: {
+                color: "#fff",
+                padding: 20,
+              },
+            },
+          },
+        },
+      });
+
+      console.log("Initializing Question Type Chart...");
+      // Question Type Distribution Chart
+      const typeCtx = document.getElementById("questionTypeChart");
+      if (!typeCtx) {
+        throw new Error("Cannot find questionTypeChart canvas element");
+      }
+
+      new Chart(typeCtx, {
+        type: "doughnut",
+        data: {
+          labels: ["Single Choice", "Multiple Choice", "Text Response"],
+          datasets: [
+            {
+              data: chartData.questionTypeCounts,
+              backgroundColor: ["#55007f", "#d072ff", "#4a036b"],
+              borderColor: "#2d0543",
+              borderWidth: 2,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: "top",
+              labels: {
+                color: "#fff",
+                padding: 20,
+              },
+            },
+          },
+        },
+      });
+
+      console.log("All charts initialized successfully");
+    } catch (error) {
+      console.error("Error initializing charts:", error);
+      console.log("Chart data:", "{{ chart_data|escapejs }}");
+    }
+  });
+</script>
+{% endblock %}

@@ -56,6 +56,9 @@ class Survey(models.Model):
 
     def user_has_responded(self, user):
         return Response.objects.filter(survey=self, student=user).exists()
+    
+    def get_response_count(self):
+        return Response.objects.filter(survey=self).count()
 
     def __str__(self):
         return self.title
@@ -104,7 +107,7 @@ class Choice(models.Model):
 
 
 class Response(models.Model):
-    survey = models.ForeignKey(Survey, on_delete=models.CASCADE)
+    survey = models.ForeignKey(Survey, on_delete=models.CASCADE, related_name="responses")
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     submitted_at = models.DateTimeField(auto_now_add=True)
 

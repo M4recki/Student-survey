@@ -29,5 +29,6 @@ urlpatterns = [
     path('take_survey/<int:survey_id>/', views.take_survey, name='take_survey'),
     path('create_survey/', views.create_survey, name='create_survey'),
     path('manage_surveys/', views.manage_surveys, name='manage_surveys'),
+    path('admin_stats/', views.admin_stats, name='admin_stats'),
     path('about/', views.about, name='about'),
 ]

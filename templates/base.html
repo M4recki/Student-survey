@@ -46,6 +46,8 @@
           <p class="navbar-item">Welcome, {{ request.user.first_name }} 👋</p>
           {% if request.user.is_superuser %}
           <a class="navbar-item" href="/manage_surveys">Manage Surveys</a>
+          <a class="navbar-item" href="/admin_stats">Admin Stats</a>
+          {% else %}
           {% endif %}
           <a class="navbar-item" href="/survey">Surveys</a>
           <a class="navbar-item" href="/logout">Logout</a>

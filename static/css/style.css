@@ -252,6 +252,112 @@
 .select.is-purple select option {
   background-color: var(--bg-dark);
 }
+
+/* Card styles */
+.card .buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.card .button {
+  min-width: 120px;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.card-content p {
+  flex-grow: 1;
+  margin-bottom: 1rem;
+}
+
+.card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Survey stats styles */
+
+.survey-stats {
+  margin: 1rem 0;
+}
+
+.survey-stats .tag {
+  background-color: var(--bg-darker);
+  color: var(--easter-purple);
+  border: 1px solid var(--primary-color);
+  padding: 0.5rem 1rem;
+}
+
+.survey-stats .tag .icon {
+  margin-right: 0.5rem;
+}
+
+.stats-card {
+  background-color: var(--bg-darker);
+  border: 1px solid var(--primary-color);
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.stats-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 15px rgba(208, 114, 255, 0.1);
+}
+
+.stats-card .heading {
+  color: var(--easter-purple);
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.stats-card .title {
+  color: white;
+  font-size: 2rem;
+}
+
+.stats-card canvas {
+  height: 300px !important;
+  width: 100% !important;
+  margin-top: 1rem;
+}
+
+.stats-summary {
+  margin-bottom: 2rem;
+}
+
+.stats-summary .stats-card {
+  min-height: 120px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.stats-chart {
+  min-height: 400px;
+  position: relative;
+}
+
+.chart-container {
+  position: relative;
+  height: 300px;
+  width: 100%;
+}
+
+.box canvas {
+  max-height: 300px;
+}
+
 /* About page */
 
 .about-hero {
@@ -411,9 +517,7 @@
 .modal-card-body {
   flex-grow: 1;
   overflow-y: auto;
-  max-height: calc(
-    90vh - 130px
-  ); /* 130px to przybliżona wysokość nagłówka i stopki */
+  max-height: calc(90vh - 130px);
   padding: 20px;
 }
 
