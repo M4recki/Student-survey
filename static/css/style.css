@@ -299,6 +299,7 @@
   margin-right: 0.5rem;
 }
 
+/* Stats Dashboard Styles */
 .stats-card {
   background-color: var(--bg-darker);
   border: 1px solid var(--primary-color);
@@ -324,6 +325,7 @@
 .stats-card .title {
   color: white;
   font-size: 2rem;
+  margin-bottom: 1.2rem;
 }
 
 .stats-card canvas {
@@ -346,6 +348,11 @@
 .stats-chart {
   min-height: 400px;
   position: relative;
+  margin-bottom: 2rem;
+}
+
+.stats-chart .title {
+  margin-bottom: 2rem;
 }
 
 .chart-container {
@@ -356,6 +363,16 @@
 
 .box canvas {
   max-height: 300px;
+}
+
+/* Stats Chart Styles */
+.chart-plot {
+  height: 300px;
+  width: 100%;
+}
+
+.chart-plot-popular {
+  padding-top: 20px;
 }
 
 /* About page */

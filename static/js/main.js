@@ -334,11 +334,31 @@ function addOption(btn) {
 }
 
 function toggleOptions(select) {
-  const optionsField = select.closest('.field').nextElementSibling;
-  if (select.value === 'text') {
-    optionsField.style.display = 'none';
+  // Dodaj sprawdzenie, czy select to element DOM
+  if (!select || typeof select.closest !== 'function') {
+    return;
+  }
+  const questionBox = select.closest(".question-box");
+  const optionsContainer = questionBox.querySelector(".options-container");
+  const optionsList = optionsContainer.querySelector(".options-list");
+  const type = select.value;
+  const questionIdx = getQuestionIdx(questionBox);
+
+  if (type === "radio" || type === "checkbox") {
+    optionsContainer.style.display = "";
+    optionsList.innerHTML = "";
+    optionsList.insertAdjacentHTML("beforeend", renderOption(questionIdx, 0, type));
+    optionsList.insertAdjacentHTML("beforeend", renderOption(questionIdx, 1, type));
+    optionsContainer.querySelector("button").style.display = "";
   } else {
-    optionsField.style.display = 'block';
+    // Text response: Show only 1 answer input
+    optionsContainer.style.display = "";
+    optionsList.innerHTML = `
+      <div class="field mb-2">
+        <input class="input is-purple" type="text" name="questions[${questionIdx}][text_response]" placeholder="User's answer will appear here" disabled>
+      </div>
+    `;
+    optionsContainer.querySelector("button").style.display = "none";
   }
 }
 
@@ -436,31 +456,6 @@ function addOptionToQuestion(btn) {
   const questionIdx = getQuestionIdx(questionBox);
   const optionIdx = optionsList.querySelectorAll(".option-row").length;
   optionsList.insertAdjacentHTML("beforeend", renderOption(questionIdx, optionIdx, type));
-}
-
-function toggleOptions(select) {
-  const questionBox = select.closest(".question-box");
-  const optionsContainer = questionBox.querySelector(".options-container");
-  const optionsList = optionsContainer.querySelector(".options-list");
-  const type = select.value;
-  const questionIdx = getQuestionIdx(questionBox);
-
-  if (type === "radio" || type === "checkbox") {
-    optionsContainer.style.display = "";
-    optionsList.innerHTML = "";
-    optionsList.insertAdjacentHTML("beforeend", renderOption(questionIdx, 0, type));
-    optionsList.insertAdjacentHTML("beforeend", renderOption(questionIdx, 1, type));
-    optionsContainer.querySelector("button").style.display = "";
-  } else {
-    // Text response: Show only 1 answer input
-    optionsContainer.style.display = "";
-    optionsList.innerHTML = `
-      <div class="field mb-2">
-        <input class="input is-purple" type="text" name="questions[${questionIdx}][text_response]" placeholder="User's answer will appear here" disabled>
-      </div>
-    `;
-    optionsContainer.querySelector("button").style.display = "none";
-  }
 }
 
 function getQuestionIdx(questionBox) {
@@ -596,8 +591,6 @@ window.addQuestion = addQuestion;
 window.addOption = addOption;
 window.toggleOptions = toggleOptions;
 window.removeQuestion = removeQuestion;
-
-window.onload = toggleOptions;
 
 window.addOption = addOption;
 window.toggleOptions = toggleOptions;

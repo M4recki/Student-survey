@@ -48,49 +48,36 @@ Student Survey{% endblock %} {% block content %}
       </div>
     </div>
 
-    <!-- Charts -->
+    <!-- Plotly Charts -->
     <div class="columns is-multiline">
-      <!-- Survey Responses Over Time -->
       <div class="column is-6">
         <div class="stats-card stats-chart">
           <h3 class="title is-4 mb-4 has-text-white">
             Survey Responses Over Time
           </h3>
-          <div class="chart-container">
-            <canvas id="responsesChart"></canvas>
-          </div>
+          <div id="responsesPlot" class="chart-plot"></div>
         </div>
       </div>
-
-      <!-- Most Popular Surveys -->
       <div class="column is-6">
         <div class="stats-card stats-chart">
           <h3 class="title is-4 mb-4 has-text-white">Most Popular Surveys</h3>
-          <div class="chart-container">
-            <canvas id="popularSurveysChart"></canvas>
-          </div>
+          <div
+            id="popularSurveysPlot"
+            class="chart-plot chart-plot-popular"></div>
         </div>
       </div>
-
-      <!-- User Activity -->
       <div class="column is-6">
         <div class="stats-card stats-chart">
           <h3 class="title is-4 mb-4 has-text-white">User Activity</h3>
-          <div class="chart-container">
-            <canvas id="userActivityChart"></canvas>
-          </div>
+          <div id="userActivityPlot" class="chart-plot"></div>
         </div>
       </div>
-
-      <!-- Response Distribution -->
       <div class="column is-6">
         <div class="stats-card stats-chart">
           <h3 class="title is-4 mb-4 has-text-white">
             Response Distribution by Question Type
           </h3>
-          <div class="chart-container">
-            <canvas id="questionTypeChart"></canvas>
-          </div>
+          <div id="questionTypePlot" style="height: 300px"></div>
         </div>
       </div>
     </div>
@@ -98,190 +85,113 @@ Student Survey{% endblock %} {% block content %}
 </section>
 
 {% endblock %} {% block extra_js %}
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.plot.ly/plotly-3.0.1.min.js"></script>
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    try {
-      console.log("Raw chart data:", "{{ chart_data|escapejs }}");
-      const chartData = JSON.parse("{{ chart_data|escapejs }}");
-      console.log("Parsed chart data:", chartData);
+    const chartData = JSON.parse("{{ chart_data|escapejs }}");
 
-      if (!chartData) {
-        throw new Error("Chart data is empty or null");
-      }
-
-      // Common chart configuration
-      Chart.defaults.color = "#fff";
-      Chart.defaults.borderColor = "rgba(255, 255, 255, 0.1)";
-
-      const commonOptions = {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            position: "top",
-            labels: {
-              color: "#fff",
-              padding: 20,
-            },
-          },
+    // 1. Survey Responses Over Time
+    Plotly.newPlot(
+      "responsesPlot",
+      [
+        {
+          x: chartData.responseDates,
+          y: chartData.responseCounts,
+          type: "scatter",
+          mode: "lines+markers",
+          marker: { color: "#d072ff" },
+          line: { color: "#d072ff" },
+          fill: "tozeroy",
+          name: "Responses",
         },
-        scales: {
-          x: {
-            grid: {
-              color: "rgba(255, 255, 255, 0.1)",
-            },
-            ticks: {
-              color: "#fff",
-            },
-          },
-          y: {
-            grid: {
-              color: "rgba(255, 255, 255, 0.1)",
-            },
-            ticks: {
-              color: "#fff",
-            },
-          },
-        },
-      };
-
-      console.log("Initializing Responses Chart...");
-      // Responses Over Time Chart
-      const responsesCtx = document.getElementById("responsesChart");
-      if (!responsesCtx) {
-        throw new Error("Cannot find responsesChart canvas element");
+      ],
+      {
+        margin: { t: 30, l: 40, r: 10, b: 40 },
+        paper_bgcolor: "rgba(0,0,0,0)",
+        plot_bgcolor: "rgba(0,0,0,0)",
+        font: { color: "#fff" },
+        xaxis: { title: "Date" },
+        yaxis: { title: "Responses" },
       }
+    );
 
-      new Chart(responsesCtx, {
-        type: "line",
-        data: {
-          labels: chartData.responseDates,
-          datasets: [
-            {
-              label: "Responses",
-              data: chartData.responseCounts,
-              borderColor: "#d072ff",
-              backgroundColor: "rgba(208, 114, 255, 0.1)",
-              tension: 0.4,
-              fill: true,
-            },
+    // 2. Most Popular Surveys
+    // FIXME: Fix margins
+    Plotly.newPlot(
+      "popularSurveysPlot",
+      [
+        {
+          x: chartData.popularSurveyCounts,
+          y: chartData.popularSurveyLabels,
+          type: "bar",
+          orientation: "h",
+          marker: { color: "#55007f" },
+          name: "Responses",
+          text: chartData.popularSurveyCounts,
+          textposition: "outside",
+          hovertemplate: "%{y}<br>Responses: %{x}<extra></extra>",
+        },
+      ],
+      {
+        margin: { t: 50, l: 260, r: 40, b: 60 },
+        height: Math.max(340, 50 * chartData.popularSurveyLabels.length),
+        paper_bgcolor: "rgba(0,0,0,0)",
+        plot_bgcolor: "rgba(0,0,0,0)",
+        font: { color: "#fff", size: 18 },
+        xaxis: { title: "Number of Responses", tickfont: { size: 16 } },
+        yaxis: {
+          title: "Survey",
+          automargin: true,
+          tickfont: { size: 16 },
+          tickpadding: 10,
+        },
+        showlegend: false,
+      }
+    );
+
+    // 3. User Activity
+    Plotly.newPlot(
+      "userActivityPlot",
+      [
+        {
+          values: [
+            chartData.userActivityData.activeUsers,
+            chartData.userActivityData.totalUsers -
+              chartData.userActivityData.activeUsers,
           ],
-        },
-        options: commonOptions,
-      });
-
-      console.log("Initializing Popular Surveys Chart...");
-      // Popular Surveys Chart
-      const popularCtx = document.getElementById("popularSurveysChart");
-      if (!popularCtx) {
-        throw new Error("Cannot find popularSurveysChart canvas element");
-      }
-
-      new Chart(popularCtx, {
-        type: "bar",
-        data: {
-          labels: chartData.popularSurveyLabels,
-          datasets: [
-            {
-              label: "Responses",
-              data: chartData.popularSurveyCounts,
-              backgroundColor: "#55007f",
-              borderColor: "#d072ff",
-              borderWidth: 1,
-            },
-          ],
-        },
-        options: {
-          ...commonOptions,
-          indexAxis: "y",
-          plugins: {
-            legend: {
-              display: false,
-            },
-          },
-        },
-      });
-
-      console.log("Initializing User Activity Chart...");
-      // User Activity Chart
-      const activityCtx = document.getElementById("userActivityChart");
-      if (!activityCtx) {
-        throw new Error("Cannot find userActivityChart canvas element");
-      }
-
-      new Chart(activityCtx, {
-        type: "pie",
-        data: {
           labels: ["Active Users", "Inactive Users"],
-          datasets: [
-            {
-              data: [
-                chartData.userActivityData.activeUsers,
-                chartData.userActivityData.totalUsers -
-                  chartData.userActivityData.activeUsers,
-              ],
-              backgroundColor: ["#d072ff", "#2d0543"],
-              borderColor: "#55007f",
-              borderWidth: 2,
-            },
-          ],
+          type: "pie",
+          marker: { colors: ["#d072ff", "#2d0543"] },
+          textinfo: "label+percent",
+          hole: 0.4,
         },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              position: "top",
-              labels: {
-                color: "#fff",
-                padding: 20,
-              },
-            },
-          },
-        },
-      });
-
-      console.log("Initializing Question Type Chart...");
-      // Question Type Distribution Chart
-      const typeCtx = document.getElementById("questionTypeChart");
-      if (!typeCtx) {
-        throw new Error("Cannot find questionTypeChart canvas element");
+      ],
+      {
+        margin: { t: 30, l: 10, r: 10, b: 10 },
+        paper_bgcolor: "rgba(0,0,0,0)",
+        font: { color: "#fff" },
       }
+    );
 
-      new Chart(typeCtx, {
-        type: "doughnut",
-        data: {
+    // 4. Question Type Distribution
+    Plotly.newPlot(
+      "questionTypePlot",
+      [
+        {
+          values: chartData.questionTypeCounts,
           labels: ["Single Choice", "Multiple Choice", "Text Response"],
-          datasets: [
-            {
-              data: chartData.questionTypeCounts,
-              backgroundColor: ["#55007f", "#d072ff", "#4a036b"],
-              borderColor: "#2d0543",
-              borderWidth: 2,
-            },
-          ],
+          type: "pie",
+          marker: { colors: ["#55007f", "#d072ff", "#4a036b"] },
+          textinfo: "label+percent",
+          hole: 0.4,
         },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              position: "top",
-              labels: {
-                color: "#fff",
-                padding: 20,
-              },
-            },
-          },
-        },
-      });
-
-      console.log("All charts initialized successfully");
-    } catch (error) {
-      console.error("Error initializing charts:", error);
-      console.log("Chart data:", "{{ chart_data|escapejs }}");
-    }
+      ],
+      {
+        margin: { t: 30, l: 10, r: 10, b: 10 },
+        paper_bgcolor: "rgba(0,0,0,0)",
+        font: { color: "#fff" },
+      }
+    );
   });
 </script>
 {% endblock %}
