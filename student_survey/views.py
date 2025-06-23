@@ -196,93 +196,83 @@ def manage_surveys(request):
 
 @user_passes_test(lambda u: u.is_superuser)
 def admin_stats(request):
-    print("Starting admin_stats view")  # Debug print
-    try:
-        # Basic statistics
-        total_surveys = Survey.objects.count()
-        total_responses = Response.objects.count()
-        total_users = Student.objects.count()
-        active_users = Response.objects.values("student").distinct().count()
-        avg_response_rate = round(
-            (total_responses / total_surveys) * 100 if total_surveys > 0 else 0, 1
+    # Basic statistics
+    total_surveys = Survey.objects.count()
+    total_responses = Response.objects.count()
+    total_users = Student.objects.count()
+    active_users = Response.objects.values("student").distinct().count()
+    avg_response_rate = round(
+        (total_responses / total_surveys) * 100 if total_surveys > 0 else 0, 1
+    )
+
+    # Data for charts
+    chart_data = {
+        "responseDates": [],
+        "responseCounts": [],
+        "popularSurveyLabels": [],
+        "popularSurveyCounts": [],
+        "questionTypeCounts": [0, 0, 0],  # radio, checkbox, text
+        "userActivityData": {
+            "activeUsers": active_users,
+            "totalUsers": total_users,
+        },
+    }
+
+    # Responses over time (last 30 days)
+    thirty_days_ago = timezone.now() - timedelta(days=30)
+    responses_by_date = (
+        Response.objects.filter(submitted_at__gte=thirty_days_ago)
+        .annotate(date=TruncDate("submitted_at"))
+        .values("date")
+        .annotate(count=Count("id"))
+        .order_by("date")
+    )
+
+    # Fill in all dates
+    current_date = thirty_days_ago.date()
+    end_date = timezone.now().date()
+
+    while current_date <= end_date:
+        date_str = current_date.strftime("%Y-%m-%d")
+        count = next(
+            (
+                item["count"]
+                for item in responses_by_date
+                if item["date"].strftime("%Y-%m-%d") == date_str
+            ),
+            0,
         )
+        chart_data["responseDates"].append(date_str)
+        chart_data["responseCounts"].append(count)
+        current_date += timedelta(days=1)
 
-        # Data for charts
-        chart_data = {
-            "responseDates": [],
-            "responseCounts": [],
-            "popularSurveyLabels": [],
-            "popularSurveyCounts": [],
-            "questionTypeCounts": [0, 0, 0],  # radio, checkbox, text
-            "userActivityData": {
-                "activeUsers": active_users,
-                "totalUsers": total_users,
-            },
-        }
+    # Popular surveys
+    popular_surveys = Survey.objects.annotate(
+        response_count=Count("responses")
+    ).order_by("-response_count")[:5]
 
-        # Responses over time (last 30 days)
-        thirty_days_ago = timezone.now() - timedelta(days=30)
-        responses_by_date = (
-            Response.objects.filter(submitted_at__gte=thirty_days_ago)
-            .annotate(date=TruncDate("submitted_at"))
-            .values("date")
-            .annotate(count=Count("id"))
-            .order_by("date")
-        )
+    chart_data["popularSurveyLabels"] = [s.title for s in popular_surveys]
+    chart_data["popularSurveyCounts"] = [s.response_count for s in popular_surveys] # type: ignore
 
-        # Fill in all dates
-        current_date = thirty_days_ago.date()
-        end_date = timezone.now().date()
+    # Question type distribution
+    for qt in Question.objects.values("question_type").annotate(count=Count("id")):
+        if qt["question_type"] == "radio":
+            chart_data["questionTypeCounts"][0] = qt["count"]
+        elif qt["question_type"] == "checkbox":
+            chart_data["questionTypeCounts"][1] = qt["count"]
+        elif qt["question_type"] == "text":
+            chart_data["questionTypeCounts"][2] = qt["count"]
 
-        while current_date <= end_date:
-            date_str = current_date.strftime("%Y-%m-%d")
-            count = next(
-                (
-                    item["count"]
-                    for item in responses_by_date
-                    if item["date"].strftime("%Y-%m-%d") == date_str
-                ),
-                0,
-            )
-            chart_data["responseDates"].append(date_str)
-            chart_data["responseCounts"].append(count)
-            current_date += timedelta(days=1)
+    context = {
+        "total_surveys": total_surveys,
+        "total_responses": total_responses,
+        "total_users": total_users,
+        "active_users": active_users,
+        "avg_response_rate": avg_response_rate,
+        "chart_data": dumps(chart_data),
+    }
 
-        # Popular surveys
-        popular_surveys = Survey.objects.annotate(
-            response_count=Count("responses")
-        ).order_by("-response_count")[:5]
-
-        chart_data["popularSurveyLabels"] = [s.title for s in popular_surveys]
-        chart_data["popularSurveyCounts"] = [s.response_count for s in popular_surveys] # type: ignore
-
-        # Question type distribution
-        for qt in Question.objects.values("question_type").annotate(count=Count("id")):
-            if qt["question_type"] == "radio":
-                chart_data["questionTypeCounts"][0] = qt["count"]
-            elif qt["question_type"] == "checkbox":
-                chart_data["questionTypeCounts"][1] = qt["count"]
-            elif qt["question_type"] == "text":
-                chart_data["questionTypeCounts"][2] = qt["count"]
-
-        context = {
-            "total_surveys": total_surveys,
-            "total_responses": total_responses,
-            "total_users": total_users,
-            "active_users": active_users,
-            "avg_response_rate": avg_response_rate,
-            "chart_data": dumps(chart_data),
-        }
-
-        return render(request, "admin_stats.html", context)
-
-    except Exception as e:
-        print(f"Error in admin_stats: {str(e)}")
-        return render(
-            request,
-            "admin_stats.html",
-            {"error": "An error occurred while loading statistics."},
-        )
+    return render(request, "admin_stats.html", context)
 
 
 @login_required

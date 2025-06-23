@@ -48,6 +48,18 @@ Student Survey{% endblock %} {% block content %}
       </div>
     </div>
 
+    <!-- Data export -->
+    <div class="is-flex is-justify-content-center mb-5">
+      <button id="exportStatsJsonBtn" class="button is-purple mx-1">
+        <span class="icon"><i class="fas fa-download"></i></span>
+        <span>Export JSON</span>
+      </button>
+      <button id="exportStatsCsvBtn" class="button is-purple mx-1">
+        <span class="icon"><i class="fas fa-file-csv"></i></span>
+        <span>Export CSV</span>
+      </button>
+    </div>
+
     <!-- Plotly Charts -->
     <div class="columns is-multiline">
       <div class="column is-6">
@@ -86,9 +98,57 @@ Student Survey{% endblock %} {% block content %}
 
 {% endblock %} {% block extra_js %}
 <script src="https://cdn.plot.ly/plotly-3.0.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const chartData = JSON.parse("{{ chart_data|escapejs }}");
+
+    // JSON Export
+    document
+      .getElementById("exportStatsJsonBtn")
+      .addEventListener("click", function () {
+        const dataStr =
+          "data:text/json;charset=utf-8," +
+          encodeURIComponent(JSON.stringify(chartData, null, 2));
+        const dlAnchor = document.createElement("a");
+        dlAnchor.setAttribute("href", dataStr);
+        dlAnchor.setAttribute("download", "survey_stats.json");
+        document.body.appendChild(dlAnchor);
+        dlAnchor.click();
+        document.body.removeChild(dlAnchor);
+      });
+
+    // CSV Export
+    document
+      .getElementById("exportStatsCsvBtn")
+      .addEventListener("click", function () {
+        let csv = "";
+        // Responses over time
+        csv += "Date,Responses\n";
+        chartData.responseDates.forEach((date, i) => {
+          csv += `${date},${chartData.responseCounts[i]}\n`;
+        });
+        csv += "\nMost Popular Surveys\nSurvey,Responses\n";
+        chartData.popularSurveyLabels.forEach((label, i) => {
+          csv += `"${label}",${chartData.popularSurveyCounts[i]}\n`;
+        });
+        csv += "\nQuestion Type Distribution\nType,Count\n";
+        ["Single Choice", "Multiple Choice", "Text Response"].forEach(
+          (type, i) => {
+            csv += `${type},${chartData.questionTypeCounts[i]}\n`;
+          }
+        );
+        csv += "\nUser Activity\nActive Users,Total Users\n";
+        csv += `${chartData.userActivityData.activeUsers},${chartData.userActivityData.totalUsers}\n`;
+        const dataStr =
+          "data:text/csv;charset=utf-8," + encodeURIComponent(csv);
+        const dlAnchor = document.createElement("a");
+        dlAnchor.setAttribute("href", dataStr);
+        dlAnchor.setAttribute("download", "survey_stats.csv");
+        document.body.appendChild(dlAnchor);
+        dlAnchor.click();
+        document.body.removeChild(dlAnchor);
+      });
 
     // 1. Survey Responses Over Time
     Plotly.newPlot(
@@ -116,7 +176,6 @@ Student Survey{% endblock %} {% block content %}
     );
 
     // 2. Most Popular Surveys
-    // FIXME: Fix margins
     Plotly.newPlot(
       "popularSurveysPlot",
       [
@@ -144,6 +203,7 @@ Student Survey{% endblock %} {% block content %}
           automargin: true,
           tickfont: { size: 16 },
           tickpadding: 10,
+          ticklabelstandoff: 18,
         },
         showlegend: false,
       }
