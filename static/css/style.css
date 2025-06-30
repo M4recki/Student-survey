@@ -1,14 +1,67 @@
-/* Colors */
+/* Global colors */
 
-:root {
-  --easter-purple: #d072ff;
-  --primary-color: #55007f;
-  --primary-dark: #4a036b;
-  --dark-purple: #2d0543;
-  --bg-dark: #171a1f;
-  --bg-darker: #131519;
-  --bg-light-dark: #1c1f24;
-  --text-light: #4a4a4a;
+:root[data-theme="light"] {
+  --bg-light-white: #f8f8fa;
+  --bg-lighter: #eaeaea;
+  --primary-color: #7c3aed;
+  --primary-dark: #5b21b6;
+  --light-purple: #ede9fe;
+  --text-light: #222;
+  --easter-purple: #a78bfa;
+}
+
+/* Light theme overrides */
+
+:root[data-theme="light"] body,
+:root[data-theme="light"] .navbar,
+:root[data-theme="light"] .footer,
+:root[data-theme="light"] .card,
+:root[data-theme="light"] .box,
+:root[data-theme="light"] .section,
+:root[data-theme="light"] .dark-section {
+  background-color: var(--bg-light-white) !important;
+  color: var(--text-light) !important;
+}
+
+:root[data-theme="light"] .navbar-item,
+:root[data-theme="light"] .social-icon {
+  color: var(--primary-color) !important;
+}
+
+:root[data-theme="light"] .navbar-item {
+  color: #111 !important;
+}
+
+:root[data-theme="light"] .card,
+:root[data-theme="light"] .box {
+  background-color: white !important;
+  color: var(--text-light) !important;
+}
+
+:root[data-theme="light"] .stat-label {
+  color: #555 !important;
+}
+
+:root[data-theme="light"] .button.is-purple {
+  background-color: var(--primary-color) !important;
+  color: white !important;
+  border: 1px solid var(--primary-dark) !important;
+}
+
+:root[data-theme="light"] .button.is-purple:hover {
+  background-color: var(--primary-dark) !important;
+  color: white !important;
+}
+
+#theme-toggle {
+  margin-top: 0;
+  margin-left: 1rem;
+  padding: 0.5rem 0.9rem;
+  min-width: 0;
+}
+
+#theme-toggle-text {
+  display: none;
 }
 
 /* Navbar */
@@ -31,7 +84,7 @@
 
 .navbar-item:hover {
   color: var(--primary-dark);
-  background-color: var(--bg-dark);
+  background-color: var(--bg-light-white);
 }
 
 .navbar-burger {
@@ -39,8 +92,8 @@
 }
 
 .navbar-dropdown {
-  background-color: var(--bg-dark);
-  border: 1px solid var(--bg-dark);
+  background-color: var(--bg-light-white);
+  border: 1px solid var(--bg-light-white);
 }
 
 .navbar-brand img {
@@ -52,14 +105,15 @@
 /* Home page */
 
 .hero {
-  background: linear-gradient(
-    135deg,
-    var(--primary-color) 0%,
-    var(--dark-purple) 100%
-  );
+  background: linear-gradient(135deg, #2d0543 0%, #7c3aed 100%);
   color: white;
-  border-radius: 5%;
-  margin-inline: 2rem;
+  border-radius: 0 0 5% 5%;
+  margin: 0;
+  width: 100vw;
+  left: 50%;
+  right: 50%;
+  position: relative;
+  transform: translateX(-50%);
 }
 
 .hero-image {
@@ -83,8 +137,8 @@
 /* Card styles */
 
 .card:hover {
-  box-shadow: 0 4px 8px var(--primary-color);
-  background-color: var(--bg-dark);
+  box-shadow: 0 4px 8px rgba(124, 58, 237, 0.25);
+  background-color: #23272f;
   transform: translateY(-5px);
 }
 
@@ -196,7 +250,7 @@
 }
 
 .dark-section {
-  background-color: var(--bg-light-dark);
+  background-color: var(--bg-light-white);
   padding: 2rem;
   border-radius: 8px;
 }
@@ -204,12 +258,19 @@
 /* Buttons, icons and cards */
 
 .button.is-purple {
-  background-color: var(--bg-darker);
-  border: 1px solid var(--primary-color);
+  background: linear-gradient(90deg, #a78bfa 0%, #7c3aed 100%);
+  color: white;
+  border: none;
+  box-shadow: 0 2px 8px rgba(124, 58, 237, 0.12);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: background 0.2s, box-shadow 0.2s;
 }
 
 .button.is-purple:hover {
-  background-color: #2a3036;
+  background: linear-gradient(90deg, #7c3aed 0%, #a78bfa 100%);
+  color: var(--bg-light-white);
+  box-shadow: 0 4px 16px rgba(124, 58, 237, 0.18);
 }
 
 .button.is-outlined.is-purple {
@@ -250,7 +311,7 @@
 }
 
 .select.is-purple select option {
-  background-color: var(--bg-dark);
+  background-color: var(--bg-light-white);
 }
 
 /* Card styles */
@@ -289,7 +350,7 @@
 }
 
 .survey-stats .tag {
-  background-color: var(--bg-darker);
+  background-color: var(--bg-lighter);
   color: var(--easter-purple);
   border: 1px solid var(--primary-color);
   padding: 0.5rem 1rem;
@@ -301,7 +362,7 @@
 
 /* Stats Dashboard Styles */
 .stats-card {
-  background-color: var(--bg-darker);
+  background-color: var(--bg-lighter);
   border: 1px solid var(--primary-color);
   border-radius: 8px;
   padding: 1.5rem;
@@ -487,7 +548,7 @@
 .footer {
   padding: 2rem 0;
   margin-top: 2rem;
-  border-top: 1px solid var(--bg-darker);
+  border-top: 1px solid var(--bg-lighter);
 }
 
 .social-links {
@@ -543,7 +604,7 @@
 }
 
 .modal-card-body::-webkit-scrollbar-track {
-  background: var(--bg-darker);
+  background: var(--bg-lighter);
   border-radius: 4px;
 }
 

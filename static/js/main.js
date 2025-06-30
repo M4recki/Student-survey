@@ -19,6 +19,31 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
+// Load the theme toggle functionality
+
+document.addEventListener("DOMContentLoaded", function() {
+  const themeToggle = document.getElementById("theme-toggle");
+  const themeText = document.getElementById("theme-toggle-text");
+  const html = document.documentElement;
+
+  if (localStorage.getItem("theme") === "light") {
+    html.setAttribute("data-theme", "light");
+    themeText.textContent = "Dark mode";
+  }
+
+  themeToggle.addEventListener("click", function() {
+    if (html.getAttribute("data-theme") === "dark") {
+      html.setAttribute("data-theme", "light");
+      localStorage.setItem("theme", "light");
+      themeText.textContent = "Dark mode";
+    } else {
+      html.setAttribute("data-theme", "dark");
+      localStorage.setItem("theme", "dark");
+      themeText.textContent = "Light mode";
+    }
+  });
+});
+
 // Load the testimonials animation
 
 document.addEventListener("DOMContentLoaded", () => {
