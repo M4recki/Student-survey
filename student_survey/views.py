@@ -9,6 +9,7 @@ from django.shortcuts import redirect, render
 from django.utils import timezone
 from json import dumps
 from .models import Student, Survey, Question, Choice, Answer, Response
+from .utils import notify_admin_new_survey_proposal
 from datetime import datetime, timedelta
 
 
@@ -113,7 +114,7 @@ def create_survey(request):
     if request.method == "POST":
         title = request.POST.get("title")
         description = request.POST.get("description")
-        survey = Survey.objects.create(  # <-- poprawka tutaj!
+        survey = Survey.objects.create(
             title=title,
             description=description,
             created_by=request.user,
@@ -137,6 +138,7 @@ def create_survey(request):
                         Choice.objects.create(question=question, text=opt)
             idx += 1
 
+        notify_admin_new_survey_proposal(survey)
         messages.success(request, "Survey created successfully.")
         return redirect("survey")
     return render(request, "create_survey.html")
