@@ -7,9 +7,11 @@ from django.db.models import Count
 from django.db.models.functions import TruncDate
 from django.shortcuts import redirect, render
 from django.utils import timezone
+from django.core.mail import send_mail
 from json import dumps
 from .models import Student, Survey, Question, Choice, Answer, Response
 from .utils import notify_admin_new_survey_proposal
+from django.conf import settings
 from datetime import datetime, timedelta
 
 
@@ -254,7 +256,7 @@ def admin_stats(request):
     ).order_by("-response_count")[:5]
 
     chart_data["popularSurveyLabels"] = [s.title for s in popular_surveys]
-    chart_data["popularSurveyCounts"] = [s.response_count for s in popular_surveys] # type: ignore
+    chart_data["popularSurveyCounts"] = [s.response_count for s in popular_surveys]  # type: ignore
 
     # Question type distribution
     for qt in Question.objects.values("question_type").annotate(count=Count("id")):
@@ -328,4 +330,20 @@ def take_survey(request, survey_id):
 
 
 def about(request):
+    if request.method == "POST":
+        name = request.POST.get("name")
+        email = request.POST.get("email")
+        subject = request.POST.get("subject")
+        message = request.POST.get("message")
+
+        send_mail(
+            subject=f"Contact Form: {subject} | From: {name} <{email}>",
+            message=message,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[settings.EMAIL_HOST_USER],
+        )
+
+        messages.success(request, "Your message has been sent successfully.")
+        return redirect("about")
+
     return render(request, "about.html")

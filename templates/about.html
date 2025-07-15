@@ -17,12 +17,7 @@ Survey{% endblock %} {% block content %}
             improvement.
           </p>
           <div class="buttons pt-6">
-            <a href="/survey" class="button is-purple is-medium"
-              >Take Survey</a
-            >
-            <a href="/contact" class="button is-white is-purple is-medium"
-              >Contact Us</a
-            >
+            <a href="/survey" class="button is-purple is-medium">Take Survey</a>
           </div>
         </div>
         <div class="column is-6">
@@ -135,11 +130,10 @@ Survey{% endblock %} {% block content %}
     <div class="columns is-vcentered">
       <div class="column is-4">
         <figure class="image mr-6 pr-6">
-          <img 
+          <img
             class="about-hero is-rounded mr-6"
             src="{% static 'img/my-image.jpg' %}"
-            alt="Team leader"
-          />
+            alt="Team leader" />
         </figure>
       </div>
       <div class="column is-8 ml-6">
@@ -147,10 +141,16 @@ Survey{% endblock %} {% block content %}
           <p class="title is-4">Marek Barański</p>
           <p class="subtitle is-6">Creator</p>
           <p class="mb-3">
-            Hi! 👋 My name is Marek and I am the creator of this app. 💻 I'm passionate about creating cutting-edge technology solutions that make life easier and support collaboration in the academic community. 🎓 My motivation was to create a platform that allows students to quickly and conveniently share opinions, engage in research and build a better future together. 🌟
+            Hi! 👋 My name is Marek and I am the creator of this app. 💻 I'm
+            passionate about creating cutting-edge technology solutions that
+            make life easier and support collaboration in the academic
+            community. 🎓 My motivation was to create a platform that allows
+            students to quickly and conveniently share opinions, engage in
+            research and build a better future together. 🌟
           </p>
           <div class="team-social mt-5">
-            <a href="https://www.linkedin.com/in/marek-bara%C5%84ski-516639248/">
+            <a
+              href="https://www.linkedin.com/in/marek-bara%C5%84ski-516639248/">
               <span class="icon is-large">
                 <i class="fab fa-linkedin social-icon"></i>
               </span>
@@ -390,11 +390,18 @@ Survey{% endblock %} {% block content %}
       </div>
       <div class="column is-7">
         <div class="box">
-          <form>
+          <form method="post" action="{% url 'about' %}">
+            {% csrf_token %}
+
             <div class="field">
               <label class="label">Name</label>
               <div class="control has-icons-left">
-                <input class="input" type="text" placeholder="Your Name" />
+                <input
+                  class="input"
+                  type="text"
+                  name="name"
+                  placeholder="Your Name"
+                  required />
                 <span class="icon is-small is-left">
                   <i class="fa-solid fa-a"></i>
                 </span>
@@ -404,7 +411,12 @@ Survey{% endblock %} {% block content %}
             <div class="field">
               <label class="label">Email</label>
               <div class="control has-icons-left">
-                <input class="input" type="email" placeholder="Your Email" />
+                <input
+                  class="input"
+                  type="email"
+                  name="email"
+                  placeholder="Your Email"
+                  required />
                 <span class="icon is-small is-left">
                   <i class="fas fa-envelope"></i>
                 </span>
@@ -414,7 +426,12 @@ Survey{% endblock %} {% block content %}
             <div class="field">
               <label class="label">Subject</label>
               <div class="control has-icons-left">
-                <input class="input" type="text" placeholder="Subject" />
+                <input
+                  class="input"
+                  type="text"
+                  name="subject"
+                  placeholder="Subject"
+                  required />
                 <span class="icon is-small is-left">
                   <i class="fa-solid fa-pen-to-square"></i>
                 </span>
@@ -426,8 +443,21 @@ Survey{% endblock %} {% block content %}
               <div class="control">
                 <textarea
                   class="textarea"
-                  placeholder="Your Message"></textarea>
+                  name="message"
+                  placeholder="Your Message"
+                  required></textarea>
+              </div>
             </div>
+
+            {% if messages %}
+            <div class="notification is-danger mt-5">
+              <ul>
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+            {% endif %}
 
             <div class="field">
               <div class="control">
