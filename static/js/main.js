@@ -21,26 +21,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Load the theme toggle functionality
 
-document.addEventListener("DOMContentLoaded", function() {
-  const themeToggle = document.getElementById("theme-toggle");
-  const themeText = document.getElementById("theme-toggle-text");
-  const html = document.documentElement;
+document.addEventListener("DOMContentLoaded", function () {
+  const btn = document.getElementById("theme-toggle");
+  if (!btn) return;
+  const root = document.documentElement;
+  const icon = btn.querySelector("i");
 
-  if (localStorage.getItem("theme") === "light") {
-    html.setAttribute("data-theme", "light");
-    themeText.textContent = "Dark mode";
-  }
+  const apply = (theme) => {
+    root.setAttribute("data-theme", theme);
+    localStorage.setItem("site-theme", theme);
+    if (icon) icon.className = theme === "light" ? "fas fa-sun" : "fas fa-moon";
+    btn.setAttribute("aria-pressed", theme === "light");
+  };
 
-  themeToggle.addEventListener("click", function() {
-    if (html.getAttribute("data-theme") === "dark") {
-      html.setAttribute("data-theme", "light");
-      localStorage.setItem("theme", "light");
-      themeText.textContent = "Dark mode";
-    } else {
-      html.setAttribute("data-theme", "dark");
-      localStorage.setItem("theme", "dark");
-      themeText.textContent = "Light mode";
-    }
+  apply(localStorage.getItem("site-theme") || root.getAttribute("data-theme") || "dark");
+
+  btn.addEventListener("click", () => {
+    apply(root.getAttribute("data-theme") === "light" ? "dark" : "light");
   });
 });
 

@@ -22,7 +22,7 @@
     <nav class="navbar is-black" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <a class="navbar-item" href="/">
-          <img src="{% static 'img/logo.png' %}" width="112" height="28" />
+          <img src="{% static 'img/favicon.ico' %}" width="112" height="28" />
         </a>
         <h1 class="title is-4 mt-4">Student survey</h1>
         <a
@@ -55,10 +55,10 @@
           <a class="navbar-item" href="/about">About</a>
           <button
             id="theme-toggle"
+            class="button is-small is-rounded"
             type="button"
-            class="button is-small is-purple"
-            <span class="icon"><i class="fas fa-adjust"></i></span>
-            <span id="theme-toggle-text">Light mode</span>
+            aria-pressed="false">
+            <span class="icon"><i class="fas fa-sun"></i></span>
           </button>
         </div>
       </div>

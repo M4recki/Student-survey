@@ -5,6 +5,7 @@
   --bg-lighter: #eaeaea;
   --primary-color: #7c3aed;
   --primary-dark: #5b21b6;
+  --dark-violet: #55007f;
   --light-purple: #ede9fe;
   --text-light: #222;
   --easter-purple: #a78bfa;
@@ -53,15 +54,43 @@
   color: white !important;
 }
 
-#theme-toggle {
-  margin-top: 0;
-  margin-left: 1rem;
-  padding: 0.5rem 0.9rem;
-  min-width: 0;
+:root[data-theme="light"] #theme-toggle .icon {
+  color: var(--dark-violet);
+  border-color: rgba(85, 0, 127, 0.12);
 }
 
-#theme-toggle-text {
-  display: none;
+/* Dark theme overrides */
+
+:root[data-theme="dark"] {
+  --dark-violet: #55007f;
+}
+:root[data-theme="dark"] .icon,
+:root[data-theme="dark"] .social-icon,
+:root[data-theme="dark"] .contact-icon,
+:root[data-theme="dark"] .icon-block .icon,
+:root[data-theme="dark"] .steps-icon,
+:root[data-theme="dark"] .value-icon,
+:root[data-theme="dark"] .theme-toggle__icon,
+:root[data-theme="dark"] .navbar-burger i,
+:root[data-theme="dark"] #theme-toggle .icon,
+:root[data-theme="dark"] .social-icon i,
+:root[data-theme="dark"] .steps-icon,
+:root[data-theme="dark"] .tag .icon {
+  color: var(--dark-violet) !important;
+  fill: var(--dark-violet) !important;
+  stroke: var(--dark-violet) !important;
+}
+:root[data-theme="dark"] .value-icon {
+  color: var(--dark-violet) !important;
+}
+
+/* Minimal theme-toggle overrides */
+#theme-toggle {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+#theme-toggle .icon {
+  color: #ccc;
 }
 
 /* Navbar */
@@ -175,17 +204,6 @@
   color: var(--text-light);
 }
 
-.icon-block {
-  margin-bottom: 1.5rem;
-}
-
-.icon-block .icon {
-  border-radius: 50%;
-  padding: 1.5rem;
-  margin-bottom: 1rem;
-  color: var(--primary-color);
-}
-
 /* How it works animations */
 
 @keyframes fadeInUp {
@@ -226,7 +244,7 @@
 }
 
 .steps-icon {
-  color: #55007f;
+  color: var(--dark-violet);
   transition: transform 0.3s ease, color 0.3s ease;
 }
 
@@ -258,7 +276,11 @@
 /* Buttons, icons and cards */
 
 .button.is-purple {
-  background: linear-gradient(90deg, #a78bfa 0%, #7c3aed 100%);
+  background: linear-gradient(
+    90deg,
+    var(--easter-purple) 0%,
+    var(--primary-color) 100%
+  );
   color: white;
   border: none;
   box-shadow: 0 2px 8px rgba(124, 58, 237, 0.12);
@@ -268,7 +290,7 @@
 }
 
 .button.is-purple:hover {
-  background: linear-gradient(90deg, #7c3aed 0%, #a78bfa 100%);
+  background: linear-gradient(90deg, var(--primary-color) 0%, #a78bfa 100%);
   color: var(--bg-light-white);
   box-shadow: 0 4px 16px rgba(124, 58, 237, 0.18);
 }
