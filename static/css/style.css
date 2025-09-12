@@ -64,7 +64,7 @@
 :root[data-theme="dark"] {
   --dark-violet: #55007f;
 }
-:root[data-theme="dark"] .icon,
+:root[data-theme="dark"] .stat-value,
 :root[data-theme="dark"] .social-icon,
 :root[data-theme="dark"] .contact-icon,
 :root[data-theme="dark"] .icon-block .icon,
@@ -75,13 +75,17 @@
 :root[data-theme="dark"] #theme-toggle .icon,
 :root[data-theme="dark"] .social-icon i,
 :root[data-theme="dark"] .steps-icon,
-:root[data-theme="dark"] .tag .icon {
+:root[data-theme="dark"] .tag .icon, 
+:root[data-theme="dark"] .value-icon {
   color: var(--dark-violet) !important;
   fill: var(--dark-violet) !important;
   stroke: var(--dark-violet) !important;
 }
-:root[data-theme="dark"] .value-icon {
-  color: var(--dark-violet) !important;
+:root[data-theme="dark"] .is-home {
+  background-color: #111;
+}
+:root[data-theme="dark"] .is-home:hover {
+  background-color: #222;
 }
 
 /* Minimal theme-toggle overrides */
