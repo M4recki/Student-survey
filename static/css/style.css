@@ -1,14 +1,33 @@
 /* Global colors */
 
 :root[data-theme="light"] {
-  --bg-light-white: #f8f8fa;
-  --bg-lighter: #eaeaea;
-  --primary-color: #7c3aed;
-  --primary-dark: #5b21b6;
-  --dark-violet: #55007f;
-  --light-purple: #ede9fe;
-  --text-light: #222;
-  --easter-purple: #a78bfa;
+  /* Backgrounds */
+  --bg-primary: #f8f8fa;
+  --bg-secondary: #eaeaea;
+  --bg-white: #ffffff;
+
+  /* Brand colors */
+  --purple-primary: #7c3aed;
+  --purple-dark: #5b21b6;
+  --purple-deep: #55007f;
+  --purple-light: #ede9fe;
+  --purple-pastel: #a78bfa;
+
+  /* Text colors */
+  --text-primary: #222222;
+  --text-secondary: #555555;
+
+  /* Gradients */
+  --gradient-primary: linear-gradient(
+    90deg,
+    var(--purple-pastel) 0%,
+    var(--purple-primary) 100%
+  );
+  --gradient-hover: linear-gradient(
+    90deg,
+    var(--purple-primary) 0%,
+    var(--purple-pastel) 100%
+  );
 }
 
 /* Light theme overrides */
@@ -20,23 +39,27 @@
 :root[data-theme="light"] .box,
 :root[data-theme="light"] .section,
 :root[data-theme="light"] .dark-section {
-  background-color: var(--bg-light-white) !important;
-  color: var(--text-light) !important;
+  background-color: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
 }
 
 :root[data-theme="light"] .navbar-item,
-:root[data-theme="light"] .social-icon {
-  color: var(--primary-color) !important;
+:root[data-theme="light"] .purple-icon,
+:root[data-theme="light"] .social-icon,
+:root[data-theme="light"] .contact-icon,
+:root[data-theme="light"] .stat-value,
+:root[data-theme="light"] .steps-icon {
+  color: var(--purple-primary) !important;
 }
 
 :root[data-theme="light"] .navbar-item {
-  color: #111 !important;
+  color: var(--text-primary) !important;
 }
 
 :root[data-theme="light"] .card,
 :root[data-theme="light"] .box {
-  background-color: white !important;
-  color: var(--text-light) !important;
+  background-color: var(--bg-white) !important;
+  color: var(--text-primary) !important;
 }
 
 :root[data-theme="light"] .stat-label {
@@ -44,25 +67,51 @@
 }
 
 :root[data-theme="light"] .button.is-purple {
-  background-color: var(--primary-color) !important;
-  color: white !important;
-  border: 1px solid var(--primary-dark) !important;
+  background-color: var(--purple-primary) !important;
+  color: var(--bg-white) !important;
+  border: 1px solid var(--purple-dark) !important;
 }
 
 :root[data-theme="light"] .button.is-purple:hover {
-  background-color: var(--primary-dark) !important;
-  color: white !important;
+  background-color: var(--purple-dark) !important;
+  color: var(--bg-white) !important;
 }
 
 :root[data-theme="light"] #theme-toggle .icon {
-  color: var(--dark-violet);
+  color: var(--purple-deep);
   border-color: rgba(85, 0, 127, 0.12);
 }
 
 /* Dark theme overrides */
 
 :root[data-theme="dark"] {
-  --dark-violet: #55007f;
+  /* Backgrounds */
+  --bg-primary: #111111;
+  --bg-secondary: #23272f;
+  --bg-white: #ffffff;
+
+  /* Brand colors - reuse from light theme */
+  --purple-primary: #7c3aed;
+  --purple-dark: #5b21b6;
+  --purple-deep: #55007f;
+  --purple-light: #ede9fe;
+  --purple-pastel: #a78bfa;
+
+  /* Text colors */
+  --text-primary: #ffffff;
+  --text-secondary: #e6e6e6;
+
+  /* Gradients */
+  --gradient-primary: linear-gradient(
+    90deg,
+    var(--purple-pastel) 0%,
+    var(--purple-primary) 100%
+  );
+  --gradient-hover: linear-gradient(
+    90deg,
+    var(--purple-primary) 0%,
+    var(--purple-pastel) 100%
+  );
 }
 :root[data-theme="dark"] .stat-value,
 :root[data-theme="dark"] .social-icon,
@@ -75,17 +124,35 @@
 :root[data-theme="dark"] #theme-toggle .icon,
 :root[data-theme="dark"] .social-icon i,
 :root[data-theme="dark"] .steps-icon,
-:root[data-theme="dark"] .tag .icon, 
+:root[data-theme="dark"] .tag .icon,
 :root[data-theme="dark"] .value-icon {
-  color: var(--dark-violet) !important;
-  fill: var(--dark-violet) !important;
-  stroke: var(--dark-violet) !important;
+  color: var(--purple-deep) !important;
+  fill: var(--purple-deep) !important;
+  stroke: var(--purple-deep) !important;
 }
 :root[data-theme="dark"] .is-home {
   background-color: #111;
 }
 :root[data-theme="dark"] .is-home:hover {
   background-color: #222;
+}
+:root[data-theme="dark"] .button.is-purple {
+  background: var(--gradient-primary) !important;
+  color: var(--bg-white) !important;
+  border: none !important;
+  box-shadow: 0 2px 12px rgba(124, 58, 237, 0.25) !important;
+}
+
+:root[data-theme="dark"] .button.is-purple:hover {
+  background: var(--gradient-hover) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.35) !important;
+}
+
+:root[data-theme="dark"] .button.is-outlined {
+  background: transparent !important;
+  border: 2px solid var(--purple-pastel) !important;
+  color: var(--purple-pastel) !important;
 }
 
 /* Minimal theme-toggle overrides */
@@ -100,8 +167,8 @@
 /* Navbar */
 
 .navbar {
-  background-color: black;
-  border-bottom: 1px solid var(--primary-dark);
+  background-color: var(--bg-primary);
+  border-bottom: 1px solid var(--purple-dark);
   position: fixed;
   width: 100%;
   height: 4rem;
@@ -109,7 +176,7 @@
 }
 
 .navbar-item {
-  color: var(--primary-color);
+  color: var(--purple-light);
   margin-left: 1rem;
   margin-right: 1rem;
   font-size: 1.2rem;
@@ -470,20 +537,31 @@
 
 .timeline-item {
   position: relative;
-  padding-left: 2rem;
-  padding-bottom: 2rem;
-  border-left: 2px solid var(--primary-color);
+  padding-left: 3rem;
+  padding-bottom: 3rem;
+  margin-left: 2rem;
+  border-left: 2px solid var(--purple-primary);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s forwards;
 }
 
 .timeline-item::before {
   content: "";
   position: absolute;
-  left: -10px;
+  left: -11px;
   top: 0;
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background-color: var(--primary-color);
+  background-color: var(--purple-primary);
+  box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.2);
+  transition: all 0.3s ease;
+}
+
+.timeline-item:hover::before {
+  transform: scale(1.2);
+  box-shadow: 0 0 0 6px rgba(124, 58, 237, 0.2);
 }
 
 .timeline-item:last-child {
@@ -529,16 +607,46 @@
 
 .milestone-year {
   font-weight: bold;
-  color: var(--primary-color);
+  color: var(--purple-primary);
   font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  opacity: 0;
+  animation: fadeInRight 0.6s forwards;
+}
+
+.timeline-item h3 {
+  opacity: 0;
+  animation: fadeInRight 0.6s 0.2s forwards;
+}
+
+.timeline-item p {
+  opacity: 0;
+  animation: fadeInRight 0.6s 0.4s forwards;
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .value-icon {
   background-color: rgba(85, 0, 127, 0.1);
   border-radius: 50%;
   padding: 1.5rem;
-  color: var(--primary-color);
+  color: var(--purple-primary);
   margin-bottom: 1rem;
+  transition: all 0.3s ease;
+}
+
+.value-icon:hover {
+  transform: scale(1.1);
+  background-color: rgba(85, 0, 127, 0.15);
 }
 
 .faq-item {
