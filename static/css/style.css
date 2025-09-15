@@ -48,12 +48,19 @@
 :root[data-theme="light"] .social-icon,
 :root[data-theme="light"] .contact-icon,
 :root[data-theme="light"] .stat-value,
+:root[data-theme="light"] .stats-card .stat-value,
 :root[data-theme="light"] .steps-icon {
   color: var(--purple-primary) !important;
 }
 
-:root[data-theme="light"] .navbar-item {
+:root[data-theme="light"] .navbar-item,
+:root[data-theme="light"] .stats-card .title,
+:root[data-theme="light"] .js-plotly-plot .plotly text {
   color: var(--text-primary) !important;
+}
+
+:root[data-theme="light"] .js-plotly-plot .plotly text {
+  fill: var(--text-primary) !important;
 }
 
 :root[data-theme="light"] .card,
@@ -117,6 +124,7 @@
 :root[data-theme="dark"] .social-icon,
 :root[data-theme="dark"] .contact-icon,
 :root[data-theme="dark"] .icon-block .icon,
+:root[data-theme="dark"] .purple-icon,
 :root[data-theme="dark"] .steps-icon,
 :root[data-theme="dark"] .value-icon,
 :root[data-theme="dark"] .theme-toggle__icon,

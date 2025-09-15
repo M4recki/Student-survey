@@ -62,6 +62,23 @@
     </div>
 
     <div class="content">
+      {% if is_contact_form %}
+      <h2>New Contact Message</h2>
+
+      <div class="survey-details">
+        <p><strong>From:</strong> {{ survey.created_by }}</p>
+        <p><strong>Subject:</strong> {{ survey.title }}</p>
+        <p><strong>Date:</strong> {{ survey.created_at|date:"F j, Y" }}</p>
+        {% if survey.description %}
+        <p><strong>Message:</strong><br />{{ survey.description }}</p>
+        {% endif %}
+      </div>
+
+      <p class="survey-text">
+        You have received a new message through the contact form.
+      </p>
+
+      {% else %}
       <h2>New Survey Proposal</h2>
 
       <div class="survey-details">
@@ -82,6 +99,7 @@
       <p class="survey-text">
         You can review and manage this survey proposal in the admin panel.
       </p>
+      {% endif %}
     </div>
 
     <div class="footer">

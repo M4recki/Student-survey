@@ -30,25 +30,25 @@ Student Survey{% endblock %} {% block content %}
       <div class="column is-3">
         <div class="stats-card">
           <p class="heading">Total Surveys</p>
-          <p class="title stat-value">{{ total_surveys }}</p>
+          <p class="stat-value">{{ total_surveys }}</p>
         </div>
       </div>
       <div class="column is-3">
         <div class="stats-card">
           <p class="heading">Total Responses</p>
-          <p class="title stat-value">{{ total_responses }}</p>
+          <p class="stat-value">{{ total_responses }}</p>
         </div>
       </div>
       <div class="column is-3">
         <div class="stats-card">
           <p class="heading">Active Users</p>
-          <p class="title stat-value">{{ active_users }}</p>
+          <p class="stat-value">{{ active_users }}</p>
         </div>
       </div>
       <div class="column is-3">
         <div class="stats-card">
           <p class="heading">Avg. Response Rate</p>
-          <p class="title stat-value">{{ avg_response_rate }}%</p>
+          <p class="stat-value">{{ avg_response_rate }}%</p>
         </div>
       </div>
     </div>
@@ -66,7 +66,6 @@ Student Survey{% endblock %} {% block content %}
     </div>
 
     <!-- Plotly Charts -->
-     <!-- FIXME: White text in the all charts -->
     <div class="columns is-multiline">
       <div class="column is-6">
         <div class="stats-card stats-chart">
@@ -227,7 +226,7 @@ Student Survey{% endblock %} {% block content %}
           ],
           labels: ["Active Users", "Inactive Users"],
           type: "pie",
-          marker: { colors: ["#d072ff", "#2d0543"] },
+          marker: { colors: ["#d072ff", "#55007f"] },
           textinfo: "label+percent",
           hole: 0.4,
         },

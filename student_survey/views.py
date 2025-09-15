@@ -7,10 +7,11 @@ from django.db.models import Count
 from django.db.models.functions import TruncDate
 from django.shortcuts import redirect, render
 from django.utils import timezone
-from django.core.mail import send_mail
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
 from json import dumps
 from .models import Student, Survey, Question, Choice, Answer, Response
-from .utils import notify_admin_new_survey_proposal
+from .utils import send_contact_form_email, notify_admin_new_survey_proposal
 from django.conf import settings
 from datetime import datetime, timedelta
 
@@ -140,9 +141,13 @@ def create_survey(request):
                         Choice.objects.create(question=question, text=opt)
             idx += 1
 
-        notify_admin_new_survey_proposal(survey)
+        if notify_admin_new_survey_proposal(survey):
+            messages.success(request, "Your message has been sent successfully.")
+        else:
+            messages.error(request, "Failed to send message. Please try again later.")
         messages.success(request, "Survey created successfully.")
         return redirect("survey")
+
     return render(request, "create_survey.html")
 
 
@@ -336,14 +341,11 @@ def about(request):
         subject = request.POST.get("subject")
         message = request.POST.get("message")
 
-        send_mail(
-            subject=f"Contact Form: {subject} | From: {name} <{email}>",
-            message=message,
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            recipient_list=[settings.EMAIL_HOST_USER],
-        )
+        if send_contact_form_email(name, email, subject, message):
+            messages.success(request, "Your message has been sent successfully.")
+        else:
+            messages.error(request, "Failed to send message. Please try again later.")
 
-        messages.success(request, "Your message has been sent successfully.")
         return redirect("about")
 
     return render(request, "about.html")
