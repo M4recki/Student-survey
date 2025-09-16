@@ -14,21 +14,49 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
 from django.urls import path
 
 from . import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', views.home, name='home'),
-    path('signup/', views.signup, name='signup'),
-    path('login/', views.login, name='login'),
-    path('logout/', views.logout_view, name='logout'),
-    path('survey/', views.survey, name='survey'),
-    path('take_survey/<int:survey_id>/', views.take_survey, name='take_survey'),
-    path('create_survey/', views.create_survey, name='create_survey'),
-    path('manage_surveys/', views.manage_surveys, name='manage_surveys'),
-    path('admin_stats/', views.admin_stats, name='admin_stats'),
-    path('about/', views.about, name='about'),
+    path("admin/", admin.site.urls),
+    path("", views.home, name="home"),
+    path("signup/", views.signup, name="signup"),
+    path("login/", views.login, name="login"),
+    path(
+        "password_reset/",
+        auth_views.PasswordResetView.as_view(template_name="password_reset_form.html"),
+        name="password_reset",
+    ),
+    path(
+        "password_reset/done/",
+        auth_views.PasswordResetDoneView.as_view(
+            template_name="registration/password_reset_done.html"
+        ),
+        name="password_reset_done",
+    ),
+    path(
+        "reset/<uidb64>/<token>/",
+        auth_views.PasswordResetConfirmView.as_view(
+            template_name="registration/password_reset_confirm.html"
+        ),
+        name="password_reset_confirm",
+    ),
+    path(
+        "reset/done/",
+        auth_views.PasswordResetCompleteView.as_view(
+            template_name="registration/password_reset_complete.html"
+        ),
+        name="password_reset_complete",
+    ),
+    path("logout/", views.logout_view, name="logout"),
+    path("survey/", views.survey, name="survey"),
+    path("take_survey/<int:survey_id>/", views.take_survey, name="take_survey"),
+    path("create_survey/", views.create_survey, name="create_survey"),
+    path("manage_surveys/", views.manage_surveys, name="manage_surveys"),
+    path("admin_stats/", views.admin_stats, name="admin_stats"),
+    path("about/", views.about, name="about"),
 ]
