@@ -78,6 +78,17 @@
         You have received a new message through the contact form.
       </p>
 
+      {% elif is_password_reset %}
+      <h2>Password Reset Request</h2>
+        <div class="survey-details">
+          <p>You're receiving this email because you requested a password reset for your account.</p>
+          <p>Please go to the following page and choose a new password:</p>
+        </div>
+        <a href="{{ reset_url }}" class="button">Reset Password</a>
+        <p class="survey-text">
+          If you didn't request this, you can safely ignore this email.
+        </p>
+
       {% else %}
       <h2>New Survey Proposal</h2>
 

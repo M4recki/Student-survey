@@ -88,10 +88,10 @@ DATABASES = {
     }
 }
 
-# Student model
+# User model
 # https://docs.djangoproject.com/en/5.1/topics/auth/customizing/#specifying-a-custom-user-model
 
-AUTH_USER_MODEL = "student_survey.Student"
+AUTH_USER_MODEL = "student_survey.User"
 
 
 # Password validation
@@ -154,3 +154,7 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
+
+# Password reset settings
+PASSWORD_RESET_TIMEOUT = 3600
+EMAIL_SUBJECT_PREFIX = "[Student Survey]"

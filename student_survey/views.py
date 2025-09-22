@@ -1,19 +1,31 @@
+from datetime import datetime, timedelta
+from json import dumps
+
+from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth import authenticate, login as auth_login, logout
+from django.contrib.auth import authenticate
+from django.contrib.auth import login as auth_login
+from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth.tokens import default_token_generator
+from django.core.mail import EmailMessage, send_mail
 from django.db import models
 from django.db.models import Count
 from django.db.models.functions import TruncDate
 from django.shortcuts import redirect, render
-from django.utils import timezone
-from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
-from json import dumps
-from .models import Student, Survey, Question, Choice, Answer, Response
-from .utils import send_contact_form_email, notify_admin_new_survey_proposal
-from django.conf import settings
-from datetime import datetime, timedelta
+from django.urls import reverse
+from django.utils import timezone
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
+
+from .models import Answer, Choice, Question, Response, User, Survey
+from .utils import (
+    notify_admin_new_survey_proposal,
+    send_contact_form_email,
+    send_password_reset_email,
+)
 
 
 def home(request):
@@ -36,11 +48,11 @@ def signup(request):
             messages.error(request, "Password must be at least 8 characters long.")
             return render(request, "signup.html")
 
-        if Student.objects.filter(email=email).exists():
+        if User.objects.filter(email=email).exists():
             messages.error(request, "Email is already registered.")
             return render(request, "signup.html")
 
-        student = Student(
+        user = User(
             first_name=first_name,
             last_name=last_name,
             email=email,
@@ -49,9 +61,9 @@ def signup(request):
             is_staff=False,
             date_joined=datetime.now(),
         )
-        student.save()
+        user.save()
 
-        auth_login(request, student)
+        auth_login(request, user)
 
         messages.success(request, "Account created successfully.")
         return redirect("home")
@@ -69,10 +81,10 @@ def login(request):
             messages.error(request, "Email and password are required.")
             return render(request, "login.html")
 
-        student = authenticate(request, email=email, password=password)
+        user = authenticate(request, email=email, password=password)
 
-        if student is not None:
-            auth_login(request, student)
+        if user is not None:
+            auth_login(request, user)
 
             if remember_me:
                 request.session.set_expiry(1209600)
@@ -86,6 +98,48 @@ def login(request):
             return render(request, "login.html")
 
     return render(request, "login.html")
+
+#FIXME: Context does not work
+def reset_password(request):
+    if request.method == "POST":
+        email = request.POST.get("email")
+
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            messages.error(request, "No account found with that email.")
+            return render(request, "password_reset_form.html")
+
+        # Generate password reset token
+        token = default_token_generator.make_token(user)
+        uid = urlsafe_base64_encode(force_bytes(user.pk))
+
+        # Build password reset URL
+        reset_url = request.build_absolute_uri(
+            reverse("password_reset_confirm", kwargs={"uidb64": uid, "token": token})
+        )
+
+        # Send email using our template
+        context = {
+            "is_password_reset": True,
+            "reset_url": reset_url,
+            "site_name": "User Survey Platform",
+            "survey": {
+                "title": "Password Reset Request",
+                "created_by": user.email,
+                "description": "A password reset was requested for your account.",
+                "created_at": timezone.now(),
+            },
+        }
+
+        if send_password_reset_email(email, context):
+            messages.success(request, "Your message has been sent successfully.")
+        else:
+            messages.error(request, "Failed to send message. Please try again later.")
+
+        return redirect("password_reset_done")
+
+    return render(request, "password_reset_form.html")
 
 
 def logout_view(request):
@@ -208,8 +262,8 @@ def admin_stats(request):
     # Basic statistics
     total_surveys = Survey.objects.count()
     total_responses = Response.objects.count()
-    total_users = Student.objects.count()
-    active_users = Response.objects.values("student").distinct().count()
+    total_users = User.objects.count()
+    active_users = Response.objects.values("user").distinct().count()
     avg_response_rate = round(
         (total_responses / total_surveys) * 100 if total_surveys > 0 else 0, 1
     )
@@ -288,7 +342,7 @@ def admin_stats(request):
 def take_survey(request, survey_id):
     survey = Survey.objects.get(id=survey_id)
 
-    if Response.objects.filter(survey=survey, student=request.user).exists():
+    if Response.objects.filter(survey=survey, user=request.user).exists():
         messages.error(request, "You have already completed this survey.")
         return redirect("survey")
 
@@ -304,7 +358,7 @@ def take_survey(request, survey_id):
     )
 
     if request.method == "POST":
-        response = Response.objects.create(survey=survey, student=request.user)
+        response = Response.objects.create(survey=survey, user=request.user)
 
         for question in questions:
             if question.question_type == "text":

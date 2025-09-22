@@ -6,7 +6,7 @@ from django.contrib.auth.models import (
 from django.db import models
 
 
-class StudentManager(BaseUserManager):
+class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
         if not email:
             raise ValueError("The Email field must be set")
@@ -28,7 +28,7 @@ class StudentManager(BaseUserManager):
         return self.create_user(email, password, **extra_fields)
 
 
-class Student(AbstractBaseUser, PermissionsMixin):
+class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     email = models.EmailField(unique=True)
@@ -36,7 +36,7 @@ class Student(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField(auto_now_add=True)
 
-    objects = StudentManager()
+    objects = UserManager()
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["first_name", "last_name"]
@@ -51,12 +51,12 @@ class Survey(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     is_approved = models.BooleanField(default=False)
     created_by = models.ForeignKey(
-        Student, on_delete=models.CASCADE, related_name="surveys"
+        User, on_delete=models.CASCADE, related_name="surveys"
     )
 
     def user_has_responded(self, user):
-        return Response.objects.filter(survey=self, student=user).exists()
-    
+        return Response.objects.filter(survey=self, user=user).exists()
+
     def get_response_count(self):
         return Response.objects.filter(survey=self).count()
 
@@ -70,25 +70,28 @@ class Question(models.Model):
         ("checkbox", "Multiple choice"),
         ("text", "Text response"),
     ]
-    survey = models.ForeignKey(Survey, on_delete=models.CASCADE, related_name="questions")
+    survey = models.ForeignKey(
+        Survey, on_delete=models.CASCADE, related_name="questions"
+    )
     text = models.CharField(max_length=500)
     question_type = models.CharField(max_length=20, choices=QUESTION_TYPES)
     order = models.IntegerField(default=0)
 
     class Meta:
-        ordering = ['question_type', 'order']
+        ordering = ["question_type", "order"]
 
     def save(self, *args, **kwargs):
         # Automatic order assignment
         if not self.order:
-            if self.question_type == 'text':
-                last_order = Question.objects.filter(survey=self.survey).aggregate(models.Max('order'))['order__max']
+            if self.question_type == "text":
+                last_order = Question.objects.filter(survey=self.survey).aggregate(
+                    models.Max("order")
+                )["order__max"]
                 self.order = (last_order or 0) + 1000
             else:
                 last_order = Question.objects.filter(
-                    survey=self.survey, 
-                    question_type=self.question_type
-                ).aggregate(models.Max('order'))['order__max']
+                    survey=self.survey, question_type=self.question_type
+                ).aggregate(models.Max("order"))["order__max"]
                 self.order = (last_order or 0) + 1
         super().save(*args, **kwargs)
 
@@ -107,8 +110,10 @@ class Choice(models.Model):
 
 
 class Response(models.Model):
-    survey = models.ForeignKey(Survey, on_delete=models.CASCADE, related_name="responses")
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    survey = models.ForeignKey(
+        Survey, on_delete=models.CASCADE, related_name="responses"
+    )
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     submitted_at = models.DateTimeField(auto_now_add=True)
 
 
