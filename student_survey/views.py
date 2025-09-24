@@ -47,6 +47,10 @@ def signup(request):
         if len(password) < 8:
             messages.error(request, "Password must be at least 8 characters long.")
             return render(request, "signup.html")
+        
+        if password.isdigit():
+            messages.error(request, "Password cannot be entirely numeric.")
+            return render(request, "signup.html")
 
         if User.objects.filter(email=email).exists():
             messages.error(request, "Email is already registered.")
@@ -99,7 +103,7 @@ def login(request):
 
     return render(request, "login.html")
 
-#FIXME: Context does not work
+
 def reset_password(request):
     if request.method == "POST":
         email = request.POST.get("email")

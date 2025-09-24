@@ -42,7 +42,7 @@ def send_contact_form_email(name, email, subject, message):
         logger.exception(f"Failed to send contact form email from {email}")
         return False
 
-#FIXME: Context does not work
+
 def send_password_reset_email(email, context):
     try:
         html_message = render_to_string("email_template.html", context)
