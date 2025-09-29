@@ -34,8 +34,8 @@ survey.title }}{% endblock %} {% block content %}
                   name="question_{{ question.id }}"
                   placeholder="Your answer"
                   required></textarea>
-                {% elif question.question_type == 'radio' %} {% for choice in
-                question.choices.all %}
+                {% elif question.question_type == 'radio' %} 
+                {% for choice in question.choices.all %}
                 <label class="radio is-block mb-2">
                   <input
                     type="radio"
@@ -44,8 +44,8 @@ survey.title }}{% endblock %} {% block content %}
                     required />
                   {{ choice.text }}
                 </label>
-                {% endfor %} {% elif question.question_type == 'checkbox' %} {%
-                for choice in question.choices.all %}
+                {% endfor %} {% elif question.question_type == 'checkbox' %} 
+                {% for choice in question.choices.all %}
                 <label class="checkbox is-block mb-2">
                   <input
                     type="checkbox"

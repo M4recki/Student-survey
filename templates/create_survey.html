@@ -42,13 +42,16 @@ Student Survey{% endblock %} {% block content %}
                   class="input is-purple"
                   type="text"
                   name="title"
-                  placeholder="Enter survey title"
-                  required />
+                  placeholder="Enter survey title" />
                 <span class="icon is-small is-left">
                   <i class="fas fa-heading"></i>
                 </span>
               </div>
             </div>
+
+            {% if messages %} {% for message in messages %}
+            <div class="notification is-danger">{{ message }}</div>
+            {% endfor %} {% endif %}
 
             <div class="field">
               <label class="label">Description</label>

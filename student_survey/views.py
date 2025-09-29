@@ -175,6 +175,12 @@ def create_survey(request):
     if request.method == "POST":
         title = request.POST.get("title")
         description = request.POST.get("description")
+
+        # Missing title validation
+        if not title:
+            messages.error(request, "Survey title is required.")
+            return render(request, "create_survey.html")
+
         survey = Survey.objects.create(
             title=title,
             description=description,
