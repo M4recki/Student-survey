@@ -28,6 +28,12 @@
 <!-- Available Surveys Section -->
 <section class="section">
   <div class="container">
+    {% if messages %} {% for message in messages %}
+    <div class="notification is-danger has-text-centered my-4">
+      {{ message }}
+    </div>
+    {% endfor %} {% endif %}
+
     <h2 class="title section-title has-text-centered my-6">
       Available Surveys
     </h2>

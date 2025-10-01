@@ -23,6 +23,10 @@ survey.title }}{% endblock %} {% block content %}
     <div class="columns">
       <div class="column is-8 is-offset-2">
         <div class="box">
+          {% if messages %} {% for message in messages %}
+          <div class="notification is-danger">{{ message }}</div>
+          {% endfor %} {% endif %}
+
           <form method="post">
             {% csrf_token %} {% for question in questions %}
             <div class="field mb-5">
@@ -34,6 +38,7 @@ survey.title }}{% endblock %} {% block content %}
                   name="question_{{ question.id }}"
                   placeholder="Your answer"
                   required></textarea>
+
                 {% elif question.question_type == 'radio' %} 
                 {% for choice in question.choices.all %}
                 <label class="radio is-block mb-2">
