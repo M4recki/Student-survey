@@ -53,3 +53,11 @@ class AdminStatsTests(TestCase):
 
         # Check if the response count is displayed 
         self.assertContains(response, "<p class=\"stat-value\">1</p>")
+
+    def test_superuser_sees_stats(self):
+        self.client.login(email="admin@example.com", password="adminpass123")
+        response = self.client.get(self.stats_url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Total Surveys")
+        self.assertContains(response, "Total Responses")
+        self.assertContains(response, "Avg. Response Rate")

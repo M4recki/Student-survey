@@ -47,7 +47,7 @@ def signup(request):
         if len(password) < 8:
             messages.error(request, "Password must be at least 8 characters long.")
             return render(request, "signup.html")
-        
+
         if password.isdigit():
             messages.error(request, "Password cannot be entirely numeric.")
             return render(request, "signup.html")
@@ -368,6 +368,25 @@ def take_survey(request, survey_id):
     )
 
     if request.method == "POST":
+        missing_required = False
+
+        # Validate required questions for testing
+        for question in questions:
+            key = f"question_{question.id}"
+            if question.question_type == "text":
+                if not request.POST.get(key):
+                    missing_required = True
+            elif question.question_type == "radio":
+                if not request.POST.get(key):
+                    missing_required = True
+            elif question.question_type == "checkbox":
+                if not request.POST.getlist(f"{key}[]"):
+                    missing_required = True
+
+        if missing_required:
+            messages.error(request, "Please answer all required questions.")
+            return redirect("take_survey", survey_id=survey.id)  # type: ignore
+
         response = Response.objects.create(survey=survey, user=request.user)
 
         for question in questions:
